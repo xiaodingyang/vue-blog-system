@@ -3,19 +3,18 @@
   <div>
 
     <div class="index-page">
-      <BaseNavBar ref="menu"></BaseNavBar>
-      <div class="main">
-        <div>
-          <BaseHeader :menuIsOpen="menuIsOpen"></BaseHeader>
+      <BaseNavBar ref="menu" id="menu"></BaseNavBar>
+      <div id="main">
+        <div id="header">
+          <BaseHeader :menuIsOpen="menuIsOpen" :isOpen="isOpen"></BaseHeader>
           <Breadcrumb></Breadcrumb>
         </div>
-        <div class="content"
+        <div id="content"
              ref="content">
-
           <router-view></router-view>
-
         </div>
         <BaseFooter></BaseFooter>
+        
       </div>
     </div>
 
@@ -30,6 +29,7 @@ import BaseHeader from './header';
 import Breadcrumb from './Breadcrumb';
 export default {
   props: [],
+   components: { BaseHeader, BaseNavBar, BaseFooter, Breadcrumb },
   data () {
     return {};
   },
@@ -37,9 +37,14 @@ export default {
     menuIsOpen () {
       return this.$refs.menu.menuIsOpen();
     },
+    isOpen () {
+      return this.$refs.menu.isOpen();
+    },
   },
   computed: {},
-  components: { BaseHeader, BaseNavBar, BaseFooter, Breadcrumb },
+ mounted(){
+
+ }
 };
 </script>
 
@@ -48,14 +53,23 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 100vw;
-  .main {
-    display: flex;
+  box-sizing: border-box;
+  #main {
+      box-sizing: border-box;
+        display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
+    overflow:hidden;
     width: 100%;
-    .content {
+    box-sizing: border-box;
+    @include bg($bg:rgb(241,244,249));
+    #content {
+            box-sizing: border-box;
       padding: 15px;
+      margin: 15px;
+      margin-top: 0;
+      box-shadow: 0 0 3px 0 #000;
+      @include bg($bg:#fff);
+      border-radius: 3px;
     }
   }
 }

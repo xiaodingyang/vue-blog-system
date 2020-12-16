@@ -3,6 +3,9 @@
     <div class="nav-icon">
       <i class="el-icon-s-fold"
          style="font-size: 20px;color:#fff;cursor: pointer;"
+         @click="menuIsOpen" v-if="!isOpen()"></i>
+      <i v-else class="el-icon-s-unfold"
+         style="font-size: 20px;color:#fff;cursor: pointer;"
          @click="menuIsOpen"></i>
     </div>
   </div>
@@ -12,6 +15,10 @@
 export default {
   props: {
     menuIsOpen: {
+      type: Function,
+      default: () => { },
+    },
+    isOpen: {
       type: Function,
       default: () => { },
     },
@@ -28,5 +35,6 @@ export default {
 .nav-bar {
   padding: 15px;
   background: $menuColor;
+   
 }
 </style>

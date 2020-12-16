@@ -17,9 +17,11 @@ export default {
 
 <style scoped lang="scss">
 .footer {
-  padding: 20px;
+
+  padding: 10px;
   background: #fff;
   text-align: center;
   font-size: 30px;
+  box-sizing: border-box;
 }
 </style>

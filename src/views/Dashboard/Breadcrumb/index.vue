@@ -1,11 +1,13 @@
 <template>
   <div class='breadcrumb'>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: item.name }"
+    <div class="wrap">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ name: item.notTo&&item.name }"
                           v-for="item in breadArr"
                           :key="item.name">{{item.label}}</el-breadcrumb-item>
 
     </el-breadcrumb>
+    </div>
   </div>
 </template>
 
@@ -67,6 +69,12 @@ export default {
 
 <style scoped lang='scss'>
 .breadcrumb {
-  padding: 20px 15px;
+  @include bg($bg:#fff);
+  margin: 15px;
+  .wrap{
+      box-shadow: 0 0 3px 0 #000;
+      padding: 10px;
+      border-radius: 3px;
+  }
 }
 </style>

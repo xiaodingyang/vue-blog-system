@@ -16,9 +16,9 @@ export default {
           default-active={this.$route.path}
           class="el-menu-vertical-demo"
           collapse={this.isCollapse}
-          text-color={this.$menuFontColor}
+          text-color="#999"
           active-text-color="#fff"
-          background-color={this.$menuColor}
+          background-color="#0D141F"
           router={true}
         >
           {this.loopList(navMap)}
@@ -30,6 +30,9 @@ export default {
     menuIsOpen () {
       const isCollapse = this.isCollapse;
       this.isCollapse = !isCollapse;
+    },
+    isOpen () {
+      return this.isCollapse
     },
     loopList (nav) {
       return nav.map((item) => {

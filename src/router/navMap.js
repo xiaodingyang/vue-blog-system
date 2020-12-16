@@ -15,6 +15,7 @@ export const navMap = [
     label: '用户管理',
     name: 'account',
     icon: 'el-icon-menu',
+    notTo:true,
     component: () => import('@/views/account/index.vue'),
     children: [
       {
