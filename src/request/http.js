@@ -33,12 +33,10 @@ const axiosFunc = (baseURL) => {
     (response) => {
       // http状态码为200，说明接口请求成功，可以正常拿到数据。否则的话抛出错误
       if (response.status === 200) {
-        const status = Number(response.data.status); // 后端与前端自定义状态码
-        return status === 2000
-          ? response.data
-          : errorHandle(status, response.data.message);
+        const status = response.data.status; // 后端状态码
+        return status ? response.data.data : message(response.data.message);
       } else {
-        return response;
+        errorHandle(response.status, response.data.message)
       }
     },
     // 服务器状态码不是2开头的的情况

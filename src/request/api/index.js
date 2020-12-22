@@ -1,5 +1,5 @@
 /* api 统一出口*/
 import system from './system';
-import b from './b';
+import user from './user.js';
 
-export default { system, b };
+export default { system, user };

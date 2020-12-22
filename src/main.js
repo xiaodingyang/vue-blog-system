@@ -5,20 +5,15 @@ import store from './store';
 import myPlugins from './plugins';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import NProgress from 'nprogress';
 import vhCheck from 'vh-check';
+import Directives from '@/directives'
+// 自定义指令
+Vue.use(Directives) 
 vhCheck('browser-address-bar');
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(myPlugins);
-router.beforeEach((to,from,next) => {
-    NProgress.start();
-    next()
-  });
-  
-  router.afterEach(() => {
-    NProgress.done();
-  });
+
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ ⭐⭐⭐ ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 全局自动化注册组件 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ ⭐⭐⭐ ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //

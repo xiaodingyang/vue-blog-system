@@ -4,6 +4,6 @@ let baseUrl = '';
 if (origin.includes('baidu')) {
   baseUrl = 'https://www.baidu.com';
 } else {
-  baseUrl = 'http://10.23.15.161:11083';
+  baseUrl = 'http://localhost:8001/api';
 }
 export default baseUrl;

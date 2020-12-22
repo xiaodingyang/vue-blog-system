@@ -1,5 +1,5 @@
 import { Message } from 'element-ui';
-import Cookie from 'cookie-js';
+import Cookie from 'js-cookie';
 // 提示框
 export const message = (msg) => {
   Message({

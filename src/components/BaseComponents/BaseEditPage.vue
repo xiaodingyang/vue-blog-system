@@ -2,7 +2,8 @@
   <div>
     <el-dialog :title="title"
                :visible.sync="dialogFormVisible"
-               :width="width || '50%'">
+               v-if="dialogFormVisible"
+               :width="width || '50%'" @close="onClose">
       <BaseFormRender :formColumn="formColumn"
                       :form="form"></BaseFormRender>
       <div slot="footer"
@@ -71,6 +72,9 @@ export default {
     }
   },
   methods: {
+      onClose(){
+          this.form={}
+      },
     handleOpen () {
       this.dialogFormVisible = true;
     },

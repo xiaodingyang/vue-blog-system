@@ -25,7 +25,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="success"
-                     @click="onSearch"
+                     v-debounce="onSearch"
                      size="mini">搜索</el-button>
         </el-form-item>
         <el-form-item>
@@ -199,8 +199,7 @@ export default {
   .search {
     border-radius: 5px;
     background: #fff;
-    margin-bottom: 10px;
-    padding: 2px 10px;
+    padding-bottom: 10px;
   }
 }
 .el-form-item /deep/ {
@@ -212,7 +211,6 @@ export default {
   padding: 10px;
 }
 .table {
-  padding: 10px;
   background: #fff;
   border-radius: 5px;
 }

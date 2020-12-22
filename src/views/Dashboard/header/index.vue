@@ -33,7 +33,7 @@ export default {
 
 <style scoped lang="scss">
 .nav-bar {
-  padding: 15px;
+  padding: 15px 0;
   background: $menuColor;
    
 }
