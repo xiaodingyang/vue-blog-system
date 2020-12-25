@@ -1,23 +1,28 @@
-import { baseAxios } from '../http';
-import { queryString } from '@/utils';
+import { baseAxios } from '../http'
+import { queryString } from '@/utils'
 export default {
-  // 获取审核人列表
-  getUserList(params) {
-    return baseAxios.post(
-      'customer/selectCustomerListPage',
-      queryString(params)
-    );
-  },
-  // 删除审核人
-  userDel(id) {
-    return baseAxios.post('/customer/delete/' + id);
-  },
-  //   更新审核人
-  userEdit(params) {
-    return baseAxios.post('/customer/updateCustomer', params);
-  },
-  //   新增审核人
-  userAdd(params) {
-    return baseAxios.post('/customer/addCustomer', params);
-  },
-};
+	// 获取用户列表
+	getUserList(params) {
+		return baseAxios.get('/user/list', {params})
+	},
+	/*********************************菜单管理开始******************************************/
+
+    // 获取菜单列表
+    // 分页
+	getMenuList(params) {
+		return baseAxios.get('/menu/treelist', {params})
+    },
+    // 不分页
+	getMenu(params) {
+		return baseAxios.get('/menu/tree', {params})
+	},
+    // 更新菜单
+	saveMenu(params) {
+		return baseAxios.post('/menu/save', params)
+	},
+    // 删除菜单
+	deleteMenu(params) {
+		return baseAxios.post('/menu/delete', params)
+	},
+	/*********************************菜单管理结束******************************************/
+}

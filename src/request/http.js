@@ -1,6 +1,7 @@
 import axios from 'axios'; // 引入axios
 import store from '@/store/index'; // 先导入vuex,因为我们要使用到里面的状态对象
 import baseURL from './baseUrl';
+import Cookie from 'js-cookie';
 import { errorHandle, message, toLogin } from './utils';
 
 const axiosFunc = (baseURL) => {
@@ -13,12 +14,7 @@ const axiosFunc = (baseURL) => {
   // 请求拦截
   instance.interceptors.request.use(
     (config) => {
-      /*
-          每次发送请求之前判断vuex中是否存在token
-          如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况
-          即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-      */
-      const token = store.state.token;
+      const token = Cookie.get('token');
       token && (config.headers.Authorization = token);
       return config;
     },
@@ -34,7 +30,7 @@ const axiosFunc = (baseURL) => {
       // http状态码为200，说明接口请求成功，可以正常拿到数据。否则的话抛出错误
       if (response.status === 200) {
         const status = response.data.status; // 后端状态码
-        return status ? response.data.data : message(response.data.message);
+        return status ? response.data.data || response.data : message(response.data.message);
       } else {
         errorHandle(response.status, response.data.message)
       }

@@ -1,11 +1,11 @@
 <script>
 
-import { navMap } from '@/router/navMap';
 export default {
 
   data () {
     return {
       isCollapse: false,
+      navList:[]
     };
   },
   render (h) {
@@ -21,10 +21,14 @@ export default {
           background-color="#0D141F"
           router={true}
         >
-          {this.loopList(navMap)}
+          {this.loopList(this.navList)}
         </el-menu>
       </div>
     );
+  },
+  created(){
+      const navList = this.$cookie.get('navList')
+      this.navList = JSON.parse(navList)
   },
   methods: {
     menuIsOpen () {
@@ -36,7 +40,8 @@ export default {
     },
     loopList (nav) {
       return nav.map((item) => {
-        if (item.label) {
+        //   0 为菜单栏路由，1为普通路由
+        if (item.type===0) {
           if (item.children) {
             return (
               <el-submenu index="1">
@@ -47,14 +52,17 @@ export default {
                 {this.loopList(item.children)}
               </el-submenu>
             );
-          } else {
-            return (
+          }else{
+              return (
               <el-menu-item index={item.path}>
                 <i class={item.icon}></i>
                 <span slot="title">{item.label}</span>
               </el-menu-item>
             );
           }
+          
+        }else if(item.children){
+            return this.loopList(item.children)
         }
       });
     },

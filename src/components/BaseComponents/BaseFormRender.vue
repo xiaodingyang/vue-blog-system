@@ -1,14 +1,6 @@
 <template>
-  <el-form ref="form"
-           :model="form"
-           :rules="rules"
-           label-position="left"
-           :label-width="labelWidth">
-    <el-row>
-      <el-col :span="item.span"
-              v-for="item in formColumn"
-              :key="item.key">
-        <el-form-item :label="item.label"
+ <div>
+     <el-form-item :label="item.label"
                       :prop="item.key">
           <!-- 文本框 -->
           <el-input :disabled="item.disabled"
@@ -27,7 +19,7 @@
                      v-if="item.type==='select'">
             <el-option :label="item.label"
                        :value="item.value"
-                       v-for="item in item.options"
+                       v-for="item in item.options || item.func()"
                        :key="item.value"></el-option>
           </el-select>
           <!-- 单选框 -->
@@ -54,14 +46,16 @@
                       :style="`width: ${formWidth}`"
                       v-if="item.type==='input'"></el-input>
           </span>
+          
           <el-cascader placeholder="请选择"
                        :style="`width: ${formWidth}`"
                        v-model="form[item.key]"
-                       :options="item.options"
+                       :options="item.options || item.func()"
                        :props="item.props"
                        clearable
                        size="mini"
                        filterable
+                       @change="(val)=>casChange(val,item.key)"
                        v-if="item.type==='cas'"></el-cascader>
           <el-date-picker v-model="form[item.key]"
                           :style="`width: ${formWidth}`"
@@ -72,9 +66,7 @@
                           v-if="item.type==='datetime'">
           </el-date-picker>
         </el-form-item>
-      </el-col>
-    </el-row>
-  </el-form>
+ </div>
 </template>
 <script>
 export default {
@@ -85,32 +77,18 @@ export default {
       required: true,
       default: () => { }
     },
-    // 表单渲染项
-    formColumn: {
-      type: Array,
+    // 每项表单的设定内容
+    item: {
+      type: Object,
       required: true,
-      default: () => []
-    },
-    // 规则项
-    rules: {
-      type: Array,
       default: () => { }
     },
-    // label 宽度
-    labelWidth: {
-      type: String,
-      default: "150px"
-    },
-    // form 宽度
+    // 表单渲染项
     formWidth: {
       type: String,
-      default: ""
+      default: '150px'
     },
-    // form 宽度
-    disabled: {
-      type: Boolean,
-      default: false
-    }
+    
   },
   data () {
     return {
@@ -118,7 +96,12 @@ export default {
     };
   },
   methods: {
-
+    //   级联选择器改变
+      casChange(val,key){
+          if(val===null){
+                this.form[key] = 0
+          }
+      }
   },
   created () {
 

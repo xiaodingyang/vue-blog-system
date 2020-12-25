@@ -7,12 +7,14 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import vhCheck from 'vh-check';
 import Directives from '@/directives'
+import formCreate from '@form-create/element-ui'
 // 自定义指令
 Vue.use(Directives) 
 vhCheck('browser-address-bar');
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(myPlugins);
+Vue.use(formCreate);
 
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ ⭐⭐⭐ ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 全局自动化注册组件 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //

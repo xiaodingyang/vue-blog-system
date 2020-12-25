@@ -43,6 +43,10 @@ export const errorHandle = (status, other) => {
     case 404:
       message('请求的资源不存在');
       break;
+    // 500服务器异常
+    case 500:
+      message('服务器异常');
+      break;
     default:
       console.log(other);
   }

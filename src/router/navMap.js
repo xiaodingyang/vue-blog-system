@@ -1,6 +1,33 @@
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 用于导航栏 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
+export default [
+    {
+		path: '/',
+		component: () => import('@/views/Dashboard/index.vue'),
+    },
+    {
+		path: '/login',
+		component: () => import('@/views/login'),
+    },
+	{
+		path: '/index',
+		component: () => import('@/views/Dashboard/Home/index.vue'),
+    },
+	{
+		path: '/system',
+		component: () => import('@/views/Dashboard/system/index.vue'),
+	},
+	{
+		path: '/system/menu',
+		component: () => import('@/views/system/menu/index.vue'),
+	},
+	{
+		path: '/system/user',
+		component: () => import('@/views/system/user/index.vue'),
+	},
+]
+
 export const navMap = [
 	{
 		path: '/',
@@ -11,34 +38,45 @@ export const navMap = [
 		component: () => import('@/views/Dashboard/Home/index.vue'),
 	},
 	{
-		path: '/account',
-		label: '用户管理',
-		name: 'account',
+		path: '/system',
+		label: '系统管理',
+		name: 'system',
 		icon: 'el-icon-menu',
 		notTo: true,
 		component: () => import('@/views/Dashboard/system/index.vue'),
 		children: [
 			{
 				path: '/',
-				name: 'account',
+				name: 'nav',
 				meta: {
 					requireAuth: true,
 				},
-				component: () => import('@/views/account/admin/index.vue'),
+				component: () => import('@/views/system/menu/index.vue'),
 			},
 			{
-				path: '/account/admin',
-				name: 'admin',
+				path: '/system/menu',
+				name: 'menu',
 				icon: 'el-icon-menu',
-				label: '管理员管理',
+				label: '菜单管理',
 				meta: {
 					requireAuth: true,
 				},
-				component: () => import('@/views/account/admin/index.vue'),
+				component: () => import('@/views/system/menu/index.vue'),
+			},
+			{
+				path: '/system/user',
+				name: 'user',
+				icon: 'el-icon-menu',
+				label: '用户管理',
+				meta: {
+					requireAuth: true,
+				},
+				component: () => import('@/views/system/user/index.vue'),
 			},
 		],
 	},
 ]
+
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 只用于路由注册，不用于导航 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //

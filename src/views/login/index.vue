@@ -13,14 +13,17 @@
 				label-position="left"
 			>
 				<el-form-item label="用户" prop="username">
-					<el-input v-model="loginForm.username" placeholder="请输入用户"></el-input>
+					<el-input
+						v-model="loginForm.username"
+						placeholder="请输入用户"
+					></el-input>
 				</el-form-item>
-				<el-form-item label="密码" prop="password" >
+				<el-form-item label="密码" prop="password">
 					<el-input
 						type="password"
 						v-model="loginForm.password"
 						autocomplete="off"
-                        placeholder="请输入密码"
+						placeholder="请输入密码"
 					></el-input>
 				</el-form-item>
 				<el-form-item label="验证码">
@@ -28,7 +31,7 @@
 						<el-input
 							v-model="loginForm.identifying"
 							class="identifying-input"
-                            placeholder="验证码"
+							placeholder="验证码"
 						></el-input>
 						<span
 							v-html="identifying"
@@ -48,7 +51,7 @@
 </template>
 
 <script>
-import Cookie from "js-cookie";
+import { stringQuery } from '@/utils'
 export default {
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐props⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	props: [],
@@ -89,11 +92,17 @@ export default {
 		submitForm() {
 			this.$refs.loginForm.validate((valid) => {
 				if (valid) {
-					this.$api.user.login(this.loginForm).then(res=>{
-                        if(res){
-                            Cookie.set('token',res.token)
-                        }
-                    })
+					this.$api.user.login(this.loginForm).then((res) => {
+						if (res) {
+							this.$cookie.set('token', res.token)
+							let path = '/'
+							if (location.search&&location.search.includes('fromPath')) {
+								path = stringQuery(decodeURIComponent(location.search)).fromPath
+							}
+                            this.$router.push(path)
+                            
+						}
+					})
 				}
 			})
 		},

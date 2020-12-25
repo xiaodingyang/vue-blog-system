@@ -1,9 +1,18 @@
 /*全局样式*/
-// * {
-//   padding: 0;
-//   margin: 0;
-// }
 ul,
 li {
   list-style: none;
 }
+
+/*****************************覆盖全局的element css********************************/
+// .el-button {
+// 	padding: 5px 10px !important;
+// 	font-size: 12px !important;
+// 	line-height: 1.5 !important;
+// 	border-radius: 3px !important;
+// }
+// .el-tag--mini{
+//     display: inline-block!important;
+//     height: auto!important;
+//     padding: 2px 5px!important;
+// }
