@@ -1,9 +1,7 @@
 import axios from 'axios'; // 引入axios
 import store from '@/store/index'; // 先导入vuex,因为我们要使用到里面的状态对象
-import baseURL from './baseUrl';
 import Cookie from 'js-cookie';
 import { errorHandle, message, toLogin } from './utils';
-
 const axiosFunc = (baseURL) => {
   const instance = axios.create({
     timeout: 10000,
@@ -58,5 +56,4 @@ const axiosFunc = (baseURL) => {
 };
 
 // 多个baseURL的情况
-export const baseAxios = axiosFunc(baseURL);
-// export const axios2 = axiosFunc(baseURL2)
+export const baseAxios = axiosFunc(process.env.VUE_APP_BASE_API);

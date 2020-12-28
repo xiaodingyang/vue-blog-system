@@ -4,10 +4,12 @@ import router from './router';
 import store from './store';
 import myPlugins from './plugins';
 import ElementUI from 'element-ui';
+import  '@/assets/styles/index.scss';
 import 'element-ui/lib/theme-chalk/index.css';
 import vhCheck from 'vh-check';
 import Directives from '@/directives'
 import formCreate from '@form-create/element-ui'
+
 // 自定义指令
 Vue.use(Directives) 
 vhCheck('browser-address-bar');

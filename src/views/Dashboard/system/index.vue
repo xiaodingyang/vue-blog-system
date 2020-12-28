@@ -1,6 +1,6 @@
 <template>
 	<div class="table-page">
-		<Breadcrumb></Breadcrumb>
+		
 			<div id="content" ref="content">
 					<router-view></router-view>
 			</div>
@@ -9,14 +9,13 @@
 </template>
 
 <script>
-import Breadcrumb from './Breadcrumb'
 import BaseFooter from './footer'
 
 export default {
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐props⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	props: [],
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐组件注册⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
-	components: {BaseFooter, Breadcrumb},
+	components: {BaseFooter},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐data数据⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	data() {
 		return {}
@@ -36,10 +35,10 @@ export default {
 
 <style scoped lang="scss">
 .table-page {
+    margin: 15px;
     #content {
 			box-sizing: border-box;
 			padding: 15px;
-			margin: 15px;
 			margin-top: 0;
 			box-shadow: 0 0 3px 0 #000;
 			@include bg($bg: #fff);

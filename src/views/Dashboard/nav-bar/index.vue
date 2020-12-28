@@ -16,9 +16,8 @@ export default {
           default-active={this.$route.path}
           class="el-menu-vertical-demo"
           collapse={this.isCollapse}
-          text-color="#999"
+          text-color="#999" 
           active-text-color="#fff"
-          background-color="#0D141F"
           router={true}
         >
           {this.loopList(this.navList)}
@@ -95,16 +94,17 @@ export default {
 }
 /deep/ .el-menu-item:hover,
 /deep/ .el-submenu__title:hover {
-  background-color: #000 !important;
+  background-color: $menuColor !important;
   color: #fff !important;
 }
 /deep/.el-menu-item.is-active {
-  background-color: $baseColor !important;
+  background-color: $green !important;
   color: #fff !important;
 }
 
 /deep/.el-menu {
   border-right: none;
   height: 100%;
+  background: $menuColor;
 }
 </style>

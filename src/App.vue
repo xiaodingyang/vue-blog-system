@@ -8,6 +8,7 @@
 
 <script>
 import Dashboard from '@/views/Dashboard'
+
 export default {
 	name: 'App',
 	components: { Dashboard },
@@ -15,19 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
-/* danger 删除按钮 */
-.el-button--danger:focus,
-.el-button--danger:hover {
-	background-color: #ec4758;
-	border-color: #ec4758;
-	color: #ffffff;
-}
 
-.el-button--danger {
-	background-color: #ed5565;
-	border-color: #ed5565;
-	color: #ffffff;
-}
 #app {
 	height: 100vh;
 	width: 100vw;

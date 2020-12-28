@@ -129,11 +129,11 @@ export default {
 .login-page {
 	position: relative;
 	height: 100vh;
-	background: url('../../assets/img/shizi.jpg') no-repeat center/cover;
+	background: url('../../assets/imgs/bg/shizi.jpg') no-repeat center/cover;
 	.bg {
 		width: 100%;
 		height: 100vh;
-		background: url('../../assets/img/shizi.jpg') no-repeat center/cover;
+		background: url('../../assets/imgs/bg/shizi.jpg') no-repeat center/cover;
 		filter: blur(5px);
 	}
 	h1 {
