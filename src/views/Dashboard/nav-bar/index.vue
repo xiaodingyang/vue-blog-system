@@ -1,23 +1,22 @@
 <script>
-
 export default {
-
-  data () {
+  data() {
     return {
       isCollapse: false,
-      navList:[]
+      navList: [],
     };
   },
-  render (h) {
+  render(h) {
     return (
       <div class="menu">
-        <div class="menu-header">{this.isCollapse ? '' : '管理系统'}</div>
+        <div class="menu-header">{this.isCollapse ? "" : "管理系统"}</div>
         <el-menu
           default-active={this.$route.path}
           class="el-menu-vertical-demo"
           collapse={this.isCollapse}
-          text-color="#999" 
-          active-text-color="#fff"
+          background-color={this.$menuBgColor}
+          text-color={this.$menuTextColor}
+          active-text-color={this.$menuActiveTextColor}
           router={true}
         >
           {this.loopList(this.navList)}
@@ -25,22 +24,22 @@ export default {
       </div>
     );
   },
-  created(){
-      const navList = this.$cookie.get('navList')
-      this.navList = JSON.parse(navList)
+  created() {
+    const navList = this.$cookie.get("navList");
+    this.navList = JSON.parse(navList);
   },
   methods: {
-    menuIsOpen () {
+    menuIsOpen() {
       const isCollapse = this.isCollapse;
       this.isCollapse = !isCollapse;
     },
-    isOpen () {
-      return this.isCollapse
+    isOpen() {
+      return this.isCollapse;
     },
-    loopList (nav) {
+    loopList(nav) {
       return nav.map((item) => {
         //   0 为菜单栏路由，1为普通路由
-        if (item.type===0) {
+        if (item.type === 0) {
           if (item.children) {
             return (
               <el-submenu index="1">
@@ -51,17 +50,16 @@ export default {
                 {this.loopList(item.children)}
               </el-submenu>
             );
-          }else{
-              return (
+          } else {
+            return (
               <el-menu-item index={item.path}>
                 <i class={item.icon}></i>
                 <span slot="title">{item.label}</span>
               </el-menu-item>
             );
           }
-          
-        }else if(item.children){
-            return this.loopList(item.children)
+        } else if (item.children) {
+          return this.loopList(item.children);
         }
       });
     },
@@ -77,7 +75,7 @@ export default {
   .menu-header {
     padding: 15px 0;
     text-align: center;
-    background: $menuColor;
+    background: $menuBgColor;
     color: #fff;
   }
 }
@@ -94,7 +92,7 @@ export default {
 }
 /deep/ .el-menu-item:hover,
 /deep/ .el-submenu__title:hover {
-  background-color: $menuColor !important;
+  background-color: $menuBgColor !important;
   color: #fff !important;
 }
 /deep/.el-menu-item.is-active {
@@ -105,6 +103,5 @@ export default {
 /deep/.el-menu {
   border-right: none;
   height: 100%;
-  background: $menuColor;
 }
 </style>
