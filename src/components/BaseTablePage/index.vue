@@ -8,7 +8,7 @@
       ></form-create>
       <el-button
         icon="el-icon-search"
-        type="primary"
+        type="cyan"
         v-debounce="onSearch"
         size="mini"
         >搜索</el-button

@@ -15,13 +15,7 @@
 			:refreshTable="refreshTable"
 			:submitFunc="submitFunc"
 		></BaseEditPage>
-		<BaseDiaLog
-			ref="log"
-			:handleSubmit="handleNavSubmit"
-			title="编辑导航"
-			width="60%"
-			>hhhhh</BaseDiaLog
-		>
+		
 	</div>
 </template>
 <script>
@@ -79,10 +73,7 @@ export default {
 						type: 'danger',
 						func: this.$api.system.userDel,
 					},
-					{
-						label: '编辑导航',
-						func: (row) => this.handelEditNav(row),
-					},
+					
 				],
 			},
 			/* 搜索项 */

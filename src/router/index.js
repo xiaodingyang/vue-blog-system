@@ -19,25 +19,48 @@ const setComponent = (data) => {
 		if (item.children) setComponent(item.children)
 		routeList.forEach((_item) => {
 			if (item.path === _item.path) {
-                for (const k in _item) {
-                    item[k] = _item[k]
-                }
-            }
+				for (const k in _item) {
+					item[k] = _item[k]
+				}
+			}
 		})
 	})
 	return data
 }
 api.getMenu().then((res) => {
-    const routes = setComponent(res.list)
-	Cookie.set('navList', routes)
-	router.addRoutes([
-		...routes,
+	const routes = setComponent(res.list)
+    Cookie.set('navList', routes)
+    const addroutes = [
+        {
+			path: '/',
+            component: () => import('@/views/Dashboard/index.vue'),
+            children: [
+                {
+                    path: '/',
+                    name: 'index',
+                    component: () => import('@/views/Dashboard/Home/index.vue'),
+                },
+                {
+                    path: '/index',
+                    label: '首页',
+                    name: 'index',
+                    component: () => import('@/views/Dashboard/Home/index.vue'),
+                },
+                ...routes
+            ]
+		},
+		{
+			path: '/login',
+			component: () => import('@/views/login'),
+		},
 		{
 			path: '*',
 			name: '404',
 			component: () => import('@/components/404.vue'),
 		},
-	])
+    ]
+    console.log('adddd',addroutes);
+	router.addRoutes(addroutes)
 })
 // 白名单
 const whiteList = ['/login', '/', '/index']
