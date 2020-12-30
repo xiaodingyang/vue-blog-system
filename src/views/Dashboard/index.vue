@@ -4,6 +4,7 @@
     <div id="main">
       <div id="header">
         <BaseHeader :menuIsOpen="menuIsOpen" :isOpen="isOpen"></BaseHeader>
+        <TagsView></TagsView>
       </div>
       <transition name="fade-transform" mode="out-in">
         <router-view></router-view>
@@ -17,10 +18,11 @@
 import BaseNavBar from "./nav-bar";
 import BaseHeader from "./header";
 import Footer from "./footer";
+import TagsView from "@/components/TagsView";
 
 export default {
   props: [],
-  components: { BaseHeader, BaseNavBar, Footer },
+  components: { BaseHeader, BaseNavBar, Footer,TagsView },
   data() {
     return {};
   },

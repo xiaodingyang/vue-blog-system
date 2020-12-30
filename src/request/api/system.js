@@ -10,7 +10,7 @@ export default {
     // 获取菜单列表
     // 分页
 	getMenuList(params) {
-		return baseAxios.get('/menu/treelist', {params})
+		return baseAxios.get('/menu/list', {params})
     },
     // 不分页
 	getMenu(params) {

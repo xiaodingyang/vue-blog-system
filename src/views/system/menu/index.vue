@@ -40,6 +40,7 @@ export default {
             );
           },
         },
+        { key: "sort", label: "排序" },
         { key: "name", label: "路由名称" },
         { key: "path", label: "路由地址" },
         {
@@ -153,6 +154,21 @@ export default {
           field: "label",
           props: {
             placeholder: "请输入菜单名称",
+          },
+        },
+        {
+          type: "input",
+          title: "排序",
+          field: "sort",
+          validate: [
+            {
+              type: "string",
+              required: true,
+              message: "请输入排序",
+            },
+          ],
+          props: {
+            placeholder: "请输入排序",
           },
         },
         {

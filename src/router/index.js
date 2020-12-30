@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Cookie from 'js-cookie'
 import VueRouter from 'vue-router'
-// import { publicNav } from './navMap'
 import routeList from './navMap'
 import NProgress from 'nprogress'
 import { Message } from 'element-ui'
