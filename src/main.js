@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router/index'
 import store from './store'
 import myPlugins from './plugins'
+import  './permission' // 权限拦截
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import vhCheck from 'vh-check'

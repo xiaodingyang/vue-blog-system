@@ -31,7 +31,7 @@ export default {
 	},
 	methods: {
 		getNavData() {
-			const navList = this.$cookie.get('navList')
+            const navList = this.$store.getters.sidebarRouters
 			if (navList) {
 				this.navList = [
 					{
@@ -41,7 +41,7 @@ export default {
 						type: 0,
 						icon: 'el-icon-s-home',
 					},
-					...JSON.parse(navList),
+					...navList,
 				]
 			}
 		},

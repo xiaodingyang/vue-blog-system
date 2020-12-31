@@ -184,3 +184,4 @@ export const sourceCopy=(source, fileds)=> {
     // 清除不是根节点的树
     return data.filter(item=>!item.parentId)
 }
+

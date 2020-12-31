@@ -26,12 +26,13 @@
             placeholder="请输入密码"
           ></el-input>
         </el-form-item>
-        <el-form-item label="验证码">
-          <div style="display:flex">
+        <el-form-item label="验证码" prop="identifying">
+          <div style="display:flex" >
             <el-input
               v-model="loginForm.identifying"
               class="identifying-input"
               placeholder="验证码"
+              @keyup.enter.native="submitForm"
             ></el-input>
             <span
               v-html="identifying"

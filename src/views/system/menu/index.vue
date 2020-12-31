@@ -43,6 +43,7 @@ export default {
         { key: "sort", label: "排序" },
         { key: "name", label: "路由名称" },
         { key: "path", label: "路由地址" },
+        { key: "component", label: "组件路径" },
         {
           key: "type",
           label: "类型",
@@ -162,7 +163,7 @@ export default {
           field: "sort",
           validate: [
             {
-              type: "string",
+              type: "number",
               required: true,
               message: "请输入排序",
             },
@@ -199,6 +200,21 @@ export default {
           ],
           props: {
             placeholder: "请输入路由地址",
+          },
+        },
+        {
+          type: "input",
+          title: "组件路径",
+          field: "component",
+          validate: [
+            {
+              type: "string",
+              required: true,
+              message: "请输入组件地址",
+            },
+          ],
+          props: {
+            placeholder: "请输入组件地址",
           },
         },
         {

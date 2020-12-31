@@ -20,7 +20,7 @@ function resolve(dir) {
 
 const name = '博客管理系统' // 标题
 
-const port = process.env.port || process.env.npm_config_port || 80 // 端口
+const port = process.env.port || process.env.npm_config_port || 8080 // 端口
 
 // vue.config.js 配置说明 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 module.exports = {
