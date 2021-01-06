@@ -3,7 +3,7 @@
 		<div class="wrap">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
 				<el-breadcrumb-item v-for="item in breadArr" :key="item.name">{{
-					item.label
+					item.meta.title
 				}}</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
@@ -27,16 +27,21 @@ export default {
 	methods: {
 		//   获取面包屑渲染数组
 		getBreadArr(path) {
-			if (path === '/') {
-				this.breadArr = [{ label: '首页', path: '/' }]
-			} else {
-				const pathArr = path.slice(1).split('/')
-				pathArr.forEach((item) => {
-					routes.forEach((_item) => {
-						if (item === _item.name) this.breadArr.push(_item)
-					})
-				})
-			}
+			const routes = this.$store.getters.sidebarRouters
+			const pathArr = path.slice(1).split('/')
+			pathArr.forEach((item) => {
+				this.setRoutes(item, routes)
+			})
+			this.breadArr = this.breadArr.filter((item) => item.meta&&item.meta.title)
+		},
+		// 回调路由匹配name
+		setRoutes(item, routes) {
+			routes.forEach((_item) => {
+				if (_item.children) {
+					this.setRoutes(item, _item.children)
+				}
+				if (item === _item.name) this.breadArr.push(_item)
+			})
 		},
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐mounted方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//

@@ -1,4 +1,5 @@
 <script>
+import navMap from "@/router/navMap";
 export default {
 	data() {
 		return {
@@ -7,6 +8,11 @@ export default {
 		}
 	},
 	render(h) {
+        const bgColor = this.$store.getters.theme.bgcolor
+        const bgactivecolor = this.$store.getters.theme.bgactivecolor
+        const textcolor = this.$store.getters.theme.textcolor
+        const textactivecolor = this.$store.getters.theme.textactivecolor
+        console.log('bg',bgColor);
 		return (
 			<div class="menu">
 				<div class="menu-header">
@@ -16,9 +22,9 @@ export default {
 					default-active={this.$route.path}
 					class="el-menu-vertical-demo"
 					collapse={this.isCollapse}
-					background-color={this.$menuBgColor}
-					text-color={this.$menuTextColor}
-					active-text-color={this.$menuActiveTextColor}
+					background-color={bgColor}
+					text-color={textcolor}
+					active-text-color={textactivecolor}
 					router={true}
 				>
 					{this.loopList(this.navList)}
@@ -31,18 +37,9 @@ export default {
 	},
 	methods: {
 		getNavData() {
-            const navList = this.$store.getters.sidebarRouters
+			const navList = this.$store.getters.sidebarRouters
 			if (navList) {
-				this.navList = [
-					{
-						path: '/index',
-						label: '首页',
-						name: 'index',
-						type: 0,
-						icon: 'el-icon-s-home',
-					},
-					...navList,
-				]
+				this.navList = navList
 			}
 		},
 		menuIsOpen() {
@@ -54,14 +51,14 @@ export default {
 		},
 		loopList(nav) {
 			return nav.map((item) => {
-				//   0 为菜单栏路由，1为普通路由
-				if (item.type === 0) {
+				//   1 为菜单栏路由，0为普通路由
+				if (item.meta&&item.meta.type) {
 					if (item.children) {
 						return (
 							<el-submenu index="1">
 								<template slot="title">
-									<i class={item.icon}></i>
-									<span slot="title">{item.label}</span>
+									<i class={item.meta.icon}></i>
+									<span slot="title">{item.meta.title}</span>
 								</template>
 								{this.loopList(item.children)}
 							</el-submenu>
@@ -69,8 +66,8 @@ export default {
 					} else {
 						return (
 							<el-menu-item index={item.path}>
-								<i class={item.icon}></i>
-								<span slot="title">{item.label}</span>
+								<i class={item.meta.icon}></i>
+								<span slot="title">{item.meta.title}</span>
 							</el-menu-item>
 						)
 					}

@@ -1,5 +1,3 @@
-// import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
 import api from '@/request/api/user'
 import navMap from '@/router/navMap'
 
@@ -57,7 +55,16 @@ const user = {
 function setComponent(data) {
 	return data.map((item) => {
 		if (item.children) setComponent(item.children)
-		item.component = loadView(item.component)
+        item.component = loadView(item.component)
+        item.meta = {
+            title:item.label,
+            icon:item.icon,
+            type: item.type
+
+        }
+        delete item.label
+        delete item.icon
+        delete item.type
 		return item
 	})
 }
@@ -79,6 +86,6 @@ function setAddRoutes(data) {
 }
 // 设置菜单栏路由
 function setSidebarRouters(data){
-    return setComponent(data)
+    return [...navMap,...setComponent(data)]
 }
 export default user

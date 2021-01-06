@@ -2,6 +2,8 @@ import router from './router/index'
 import NProgress from 'nprogress'
 import { getToken } from '@/utils/auth'
 import store from './store'
+import { Message } from 'element-ui'
+
 
 /**********************登录权限验证，动态添加路由*************************/
 

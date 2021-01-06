@@ -29,6 +29,7 @@
 <script>
 import ScrollPane from './ScrollPane'
 import path from 'path'
+import navMap from '@/router/navMap'
 
 export default {
   components: { ScrollPane },
@@ -46,10 +47,12 @@ export default {
       return this.$store.state.tagsView.visitedViews
     },
     routes() {
-      return this.$store.state.permission.routes
+    //   return this.$store.state.permission.routes
+      return this.$store.state.user.sidebarRouters
     },
     theme() {
-      return this.$store.state.settings.theme;
+    //   return this.$store.state.settings.theme;
+    return '#1890ff'
     }
   },
   watch: {
@@ -115,6 +118,7 @@ export default {
     },
     addTags() {
       const { name } = this.$route
+      console.log('aaaa',this.$route);
       if (name) {
         this.$store.dispatch('tagsView/addView', this.$route)
       }

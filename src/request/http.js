@@ -5,7 +5,7 @@ import { errorHandle, message, toLogin } from './utils'
 const axiosFunc = (baseURL) => {
 	axios.defaults.withCredentials = true // 解决跨域问题，以及后端redis跨域获取不到的问题，重要，重要
 	const instance = axios.create({
-		timeout: 10000,
+		timeout: 30000,
 		baseURL,
 		headers: {},
 	})
@@ -13,7 +13,8 @@ const axiosFunc = (baseURL) => {
 	// 请求拦截
 	instance.interceptors.request.use(
 		(config) => {
-			const token = Cookie.get('token')
+            const token = Cookie.get('token')
+            
 			token && (config.headers.Authorization = token)
 			return config
 		},

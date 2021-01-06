@@ -171,6 +171,7 @@ export const sourceCopy=(source, fileds)=> {
     }
   }
 
+//   组装树
   export const setTreeData = (data)=> {
     data.forEach((item) => {
         item.children = [] // 初始化children
