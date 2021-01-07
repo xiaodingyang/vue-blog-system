@@ -50,7 +50,7 @@ export default {
 					label: '类型',
 					formatter(h, row) {
 						let str = '',
-							type = 'primary'
+							type = 'main'
 						if (row.type === 1) str = '菜单目录'
 						if (row.type === 0) {
 							str = '按钮路由'
@@ -72,7 +72,7 @@ export default {
 						if (row.auth === 1) str = '普通用户'
 						if (row.auth === 2) str = '管理员'
 						return (
-							<el-tag size="mini" effect="dark" type="primary">
+							<el-tag size="mini" effect="dark" type="main">
 								{str}
 							</el-tag>
 						)

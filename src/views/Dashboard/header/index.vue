@@ -100,9 +100,9 @@ export default {
 <style scoped lang="scss">
 .nav-bar {
 	display: flex;
-	padding: 10px 0;
+	padding: 10px 14px;
 	background: $menuBgColor;
-	justify-content: space-between;
+    justify-content: space-between;
 	.left {
 		display: flex;
 		i {

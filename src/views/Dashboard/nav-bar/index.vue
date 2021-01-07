@@ -1,5 +1,5 @@
 <script>
-import navMap from "@/router/navMap";
+import navMap from '@/router/navMap'
 export default {
 	data() {
 		return {
@@ -8,11 +8,6 @@ export default {
 		}
 	},
 	render(h) {
-        const bgColor = this.$store.getters.theme.bgcolor
-        const bgactivecolor = this.$store.getters.theme.bgactivecolor
-        const textcolor = this.$store.getters.theme.textcolor
-        const textactivecolor = this.$store.getters.theme.textactivecolor
-        console.log('bg',bgColor);
 		return (
 			<div class="menu">
 				<div class="menu-header">
@@ -22,9 +17,9 @@ export default {
 					default-active={this.$route.path}
 					class="el-menu-vertical-demo"
 					collapse={this.isCollapse}
-					background-color={bgColor}
-					text-color={textcolor}
-					active-text-color={textactivecolor}
+					background-color='#000'
+					text-color="#fff"
+					active-text-color='#fff'
 					router={true}
 				>
 					{this.loopList(this.navList)}
@@ -32,8 +27,15 @@ export default {
 			</div>
 		)
 	},
+	computed: {
+		
+	},
 	created() {
+        this.$store.dispatch('setTheme','theme1')
 		this.getNavData()
+	},
+	watch: {
+		
 	},
 	methods: {
 		getNavData() {
@@ -52,7 +54,7 @@ export default {
 		loopList(nav) {
 			return nav.map((item) => {
 				//   1 为菜单栏路由，0为普通路由
-				if (item.meta&&item.meta.type) {
+				if (item.meta && item.meta.type) {
 					if (item.children) {
 						return (
 							<el-submenu index="1">
@@ -84,7 +86,8 @@ export default {
 .menu {
 	min-height: 100vh;
 	display: flex;
-	flex-direction: column;
+    flex-direction: column;
+    
 	.menu-header {
 		padding: 15px 0;
 		text-align: center;
@@ -103,18 +106,9 @@ export default {
 	height: 40px !important;
 	line-height: 40px !important;
 }
-/deep/ .el-menu-item:hover,
-/deep/ .el-submenu__title:hover {
-	background-color: $menuBgColor !important;
-	color: #fff !important;
-}
-/deep/.el-menu-item.is-active {
-	background-color: $green !important;
-	color: #fff !important;
-}
 
 /deep/.el-menu {
 	border-right: none;
-	height: 100%;
+    height: 100%;
 }
 </style>

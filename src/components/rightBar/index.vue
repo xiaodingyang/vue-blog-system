@@ -5,9 +5,9 @@
 			<div class="box">
 				<el-radio-group v-model="radio" @change="handleChange">
 					<el-radio
-						:label="item.value"
-						v-for="item in themeList"
-						:key="item.color"
+						:label="item.label"
+						v-for="item in theme"
+						:key="item.label"
 						><p :style="`background:${item.color}`"></p
 					></el-radio>
 				</el-radio-group>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import variables from "@/assets/styles/variables.scss";
+
 export default {
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐props⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	props: [],
@@ -25,17 +27,14 @@ export default {
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐data数据⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	data() {
 		return {
-			radio: 0,
-			themeList: [
-				{ bgcolor: 'rgb(13, 20, 31)', bgactivecolor: '#30b08f',textcolor:'rgb(153, 153, 153)',textactivecolor:'#fff', value: 0 },
-				{ color: '#1890ff', active: 'rgb(45,61,81)', value: 1 },
-			],
+			radio: 'theme1',
+			
 		}
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐method方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	methods: {
         handleChange(val){
-            this.$store.commit('SET_LAYOUT_THEME',this.themeList[val])
+            this.$store.dispatch('setTheme',val)
         }
     },
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐mounted方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
@@ -46,7 +45,19 @@ export default {
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐watch监听属性⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	watch: {},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐computed计算属性⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
-	computed: {},
+	computed: {
+        theme(){
+            const arr = []
+            for (const k in variables) {
+               arr.push({
+                   label:k,
+                   color:variables[k].split(',')[0]
+               })
+            }
+            console.log('aaa',arr);
+            return arr
+        }
+    },
 }
 </script>
 

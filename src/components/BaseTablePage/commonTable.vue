@@ -80,7 +80,7 @@ export default {
           {/*当操作列表大于2的时候*/}
           {this.operation2.length > 0 ? (
             <el-dropdown style={{ marginLeft: "10px" }}>
-              <el-button type="primary" size="mini">
+              <el-button type="main" size="mini">
                 更多
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
@@ -118,7 +118,7 @@ export default {
           disabled={item.disabled && item.disabled(row)}
           icon={icon}
           size="mini"
-          type={item.type || "primary"}
+          type={item.type || "main"}
           onClick={() =>
             item.label === "删除"
               ? this.handleDel(item.func, row.id)

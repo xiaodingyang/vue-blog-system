@@ -153,26 +153,7 @@
 	margin-bottom: 10px;
 }
 
-/* button color */
-/deep/.el-button--cyan.is-active,
-/deep/.el-button--cyan:active {
-  background: #20B2AA;
-  border-color: #20B2AA;
-  color: #FFFFFF;
-}
 
-/deep/.el-button--cyan:focus,
-/deep/.el-button--cyan:hover {
-  background: #48D1CC;
-  border-color: #48D1CC;
-  color: #FFFFFF;
-}
-
-/deep/.el-button--cyan {
-  background-color: #20B2AA;
-  border-color: #20B2AA;
-  color: #FFFFFF;
-}
 
 /* text color */
 .text-navy {

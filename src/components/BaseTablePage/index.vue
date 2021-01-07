@@ -8,7 +8,7 @@
       ></form-create>
       <el-button
         icon="el-icon-search"
-        type="cyan"
+        type="main"
         v-debounce="onSearch"
         size="mini"
         >搜索</el-button
@@ -23,7 +23,7 @@
         <el-form>
           <el-form-item>
             <el-button
-              :type="item.type || 'primary'"
+              :type="item.type || 'main'"
               @click="item.func"
               :icon="setIcon(item)"
               size="mini"

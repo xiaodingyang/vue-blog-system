@@ -45,7 +45,7 @@
 			<div class="login-button">
 				<el-button
 					size="mini"
-					type="primary"
+					type="main"
 					v-debounce="submitForm"
 					:loading="loading"
 					>登录</el-button

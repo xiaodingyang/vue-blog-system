@@ -89,7 +89,7 @@ export default {
         },
         submitBtn: {
           icon: "",
-          type: "primary",
+          type: "main",
         },
       },
     };
