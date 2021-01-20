@@ -20,14 +20,14 @@
 		<div class="right">
 			<el-dropdown v-if="userInfo">
 				<span class="el-dropdown-link">
-					<img :src="headeImg" alt="" width="30" />
+					<img :src="userInfo.headImg" alt="" width="30" />
 					<span
 						>{{ userInfo.realname
 						}}<i class="el-icon-arrow-down el-icon--right"></i
 					></span>
 				</span>
 				<el-dropdown-menu slot="dropdown">
-					<el-dropdown-item>个人中心</el-dropdown-item>
+					<el-dropdown-item><router-link to="/profile">个人中心</router-link></el-dropdown-item>
 					<el-dropdown-item 
 						><span @click="setLayout">布局设置</span></el-dropdown-item
 					>
@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<el-dialog
-			title=""
+			title="布局设置"
 			:visible.sync="dialogVisible"
 			width="30%"
             :show-close="false"
@@ -70,7 +70,6 @@ export default {
 	},
 	data() {
 		return {
-            userInfo: {},
             dialogVisible:false
 		}
 	},
@@ -85,14 +84,11 @@ export default {
 	},
 	components: { Breadcrumb,RightBar },
 	created() {
-		this.userInfo = this.$store.getters.userInfo
 	},
 	computed: {
-		headeImg() {
-			if (this.userInfo) {
-				return JSON.parse(this.userInfo.headImg).url
-			}
-		},
+		userInfo(){
+            return this.$store.getters.userInfo
+        }
 	},
 }
 </script>

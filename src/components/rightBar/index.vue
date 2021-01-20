@@ -8,9 +8,18 @@
 						:label="item.label"
 						v-for="item in theme"
 						:key="item.label"
-						><p :style="`background:${item.color}`"></p
-					></el-radio>
+						>
+                        <div class="box-split">
+                            <p :style="`background:${_item}`" v-for="(_item,idx) in item.color" :key="idx"></p>
+                        </div>
+                        </el-radio>
 				</el-radio-group>
+			</div>
+		</div>
+		<div class="system">
+			<h3>系统布局设置</h3>
+			<div class="wrap">
+				
 			</div>
 		</div>
 	</div>
@@ -27,8 +36,7 @@ export default {
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐data数据⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	data() {
 		return {
-			radio: 'theme1',
-			
+			radio: this.$store.getters.theme || 'theme1',
 		}
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐method方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
@@ -51,10 +59,9 @@ export default {
             for (const k in variables) {
                arr.push({
                    label:k,
-                   color:variables[k].split(',')[0]
+                   color:variables[k].split(',')
                })
             }
-            console.log('aaa',arr);
             return arr
         }
     },
@@ -63,18 +70,22 @@ export default {
 
 <style scoped lang="scss">
 h3 {
-	font-size: 16px;
+	font-size: 15px;
 	color: #000;
-	margin-bottom: 20px;
+	margin: 20px 0;
 }
 .box {
-	display: flex;
-	p {
-		width: 50px;
-		height: 50px;
-		border-radius: 5px;
+    display: flex;
+    .box-split{
+        display: flex;
+        width: 50px;
+        height: 50px;
+        // border-radius: 5px;
 		box-shadow: 0 0 2px 0 #000;
 		cursor: pointer;
-	}
+    }
+	p {
+		width: 20px;
+	}   
 }
 </style>

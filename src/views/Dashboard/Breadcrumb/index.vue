@@ -2,7 +2,7 @@
 	<div class="breadcrumb">
 		<div class="wrap">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
-				<el-breadcrumb-item v-for="item in breadArr" :key="item.name">{{
+				<el-breadcrumb-item v-for="(item,idx) in breadArr" :key="idx">{{
 					item.meta.title
 				}}</el-breadcrumb-item>
 			</el-breadcrumb>
@@ -31,7 +31,8 @@ export default {
 			const pathArr = path.slice(1).split('/')
 			pathArr.forEach((item) => {
 				this.setRoutes(item, routes)
-			})
+            })
+            
 			this.breadArr = this.breadArr.filter((item) => item.meta&&item.meta.title)
 		},
 		// 回调路由匹配name
@@ -41,7 +42,7 @@ export default {
 					this.setRoutes(item, _item.children)
 				}
 				if (item === _item.name) this.breadArr.push(_item)
-			})
+            })
 		},
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐mounted方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//

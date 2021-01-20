@@ -16,6 +16,7 @@ $--color-danger: #ff4949;
 // 主题色 nth($theme, 1)根据索引可以拿到对应位置的颜色，注意：索引从1开始
 $theme1: rgb(13, 20, 31), #30b08f,#48D1CC, rgb(153, 153, 153), #fff; // 主色调 背景激活颜色 按钮激活颜色 字体颜色 字体激活颜色
 $theme2: rgb(119, 52, 96), rgb(78, 29, 76),rgb(119, 52, 96), #fff, rgb(227, 179, 37); // 主色调 背景激活颜色 按钮激活颜色 字体颜色 字体激活颜色
+$theme3: rgb(131,175,155), rgb(254,67,101),rgb(200,200,169), #fff, rgb(249,205,173); // 主色调 背景激活颜色 按钮激活颜色 字体颜色 字体激活颜色
 
 /**主题色混合**/
 @mixin theme($theme) {
@@ -123,9 +124,13 @@ $theme2: rgb(119, 52, 96), rgb(78, 29, 76),rgb(119, 52, 96), #fff, rgb(227, 179,
 .theme2 {
 	@include theme($theme2);
 }
+.theme3 {
+	@include theme($theme3);
+}
 
 // :export 可以导出颜色作为js使用
 :export {
 	theme1: $theme1;
 	theme2: $theme2;
+	theme3: $theme3;
 }

@@ -48,7 +48,6 @@ export default {
       })
         .then(() => {
           func({ id }).then((res) => {
-            console.log("res", res);
             if (res && res.status) {
               this.refreshTable();
               this.$message({

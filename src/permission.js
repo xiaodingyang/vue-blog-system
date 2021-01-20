@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
 							{
 								path: '*',
 								name: '404',
-								component: () => import('@/components/404.vue'),
+								component: () => import('@/components/error/404.vue'),
 							},
 						])
 						/*
@@ -48,12 +48,7 @@ router.beforeEach((to, from, next) => {
 			if (!to.path.includes('login')) {
 				Message.error('登录已过期，请重新登录！')
 				setTimeout(() => {
-					next({
-						path: '/login',
-						query: {
-							fromPath: to.path,
-						},
-					})
+					next('/login')
 				}, 800)
 			}
 		}

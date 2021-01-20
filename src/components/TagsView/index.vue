@@ -17,7 +17,7 @@
 				}"
 				tag="span"
 				class="tags-view-item"
-				:style="activeStyle(tag)"
+				
 				@click.middle.native="
 					!isAffix(tag) ? closeSelectedTag(tag) : ''
 				"
@@ -73,10 +73,10 @@ export default {
 			//   return this.$store.state.permission.routes
 			return this.$store.state.user.sidebarRouters
 		},
-		theme() {
-			//   return this.$store.state.settings.theme;
-			return '#1890ff'
-		},
+		// theme() {
+		// 	//   return this.$store.state.settings.theme;
+		// 	return '#1890ff'
+		// },
 	},
 	watch: {
 		$route() {
@@ -99,13 +99,13 @@ export default {
 		isActive(route) {
 			return route.path === this.$route.path
 		},
-		activeStyle(tag) {
-			if (!this.isActive(tag)) return {}
-			return {
-				'background-color': this.theme,
-				'border-color': this.theme,
-			}
-		},
+		// activeStyle(tag) {
+		// 	if (!this.isActive(tag)) return {}
+		// 	return {
+		// 		'background-color': this.theme,
+		// 		'border-color': this.theme,
+		// 	}
+		// },
 		isAffix(tag) {
 			return tag.meta && tag.meta.affix
 		},
@@ -146,7 +146,6 @@ export default {
 		},
 		addTags() {
 			const { name } = this.$route
-			console.log('aaaa', this.$route)
 			if (name) {
 				this.$store.dispatch('tagsView/addView', this.$route)
 			}

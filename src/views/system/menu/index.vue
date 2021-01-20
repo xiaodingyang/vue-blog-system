@@ -10,11 +10,8 @@
 		<BaseEditPage
 			ref="edit"
 			:formColumn="formColumn"
-			:title="editTitle"
-			:refreshTable="refreshTable"
-			:submitFunc="submitFunc"
+			@formChange="formChange"
 		></BaseEditPage>
-		<!-- <form-create v-model="form" :rule="rule" @on-submit="onSubmit"></form-create> -->
 	</div>
 </template>
 <script>
@@ -96,21 +93,21 @@ export default {
 				form: [
 					{
 						type: 'input',
-						field: 'realname',
+						field: 'label',
 						props: {
-							placeholder: '昵称',
+							placeholder: '菜单名称',
 						},
 					},
 					{
 						type: 'input',
-						field: 'username',
+						field: 'name',
 						props: {
-							placeholder: '用户名',
+							placeholder: '路由名称',
 						},
 					},
 					{
 						type: 'select',
-						field: 'roleId',
+						field: 'auth',
 						props: {
 							placeholder: '权限',
 						},
@@ -126,18 +123,9 @@ export default {
 			/* 表单渲染项 */
 			formColumn: [
 				{
-					type: 'cascader',
-					field: 'parentId',
-					title: '上级菜单',
-					props: {
-						placeholder: '请输入上级菜单',
-					},
-				},
-				{
 					type: 'radio',
 					title: '菜单类型',
 					field: 'type',
-					value: 0,
 					options: [
 						{ label: '按钮路由', value: 0 },
 						{ label: '菜单目录', value: 1 },
@@ -150,6 +138,15 @@ export default {
 						},
 					],
 				},
+				{
+					type: 'cascader',
+					field: 'parentId',
+					title: '上级菜单',
+					props: {
+						placeholder: '请输入上级菜单',
+					},
+				},
+
 				{
 					type: 'input',
 					title: '菜单名称',
@@ -253,23 +250,31 @@ export default {
 	},
 	computed: {},
 	methods: {
+		// form改变时执行
+		formChange($f) {
+			// 菜单类型改变
+			if ($f.form.type === 0) {
+				$f.hidden(true, ['sort', 'icon'])
+			}
+			if ($f.form.type === 1) {
+				$f.hidden(false, ['sort', 'icon'])
+			}
+		},
 		// 编辑
 		handelEdit(row) {
-			this.editTitle = '编辑审核人'
-			this.submitFunc = this.$api.system.saveMenu
-			this.$refs.edit.handleOpen(row)
+			this.$refs.edit.handleOpen({
+				title: '编辑审核人',
+				submitFunc: this.$api.system.saveMenu,
+				row,
+				refreshTable: this.$refs.table.getData,
+			})
 		},
-		// 刷新列表
-		refreshTable(params) {
-			return this.$refs.table.getData(params)
-		},
+
 		handleAdd() {
-			this.editTitle = '新增审核人'
-			this.editData = {}
-			this.submitFunc = this.$api.system.saveMenu
-			this.$refs.edit.handleOpen()
-			this.$nextTick(() => {
-				console.log('data', this.$refs.edit.form)
+			this.$refs.edit.handleOpen({
+				title: '新增审核人',
+				submitFunc: this.$api.system.saveMenu,
+				refreshTable: this.$refs.table.getData,
 			})
 		},
 		// 获取所有菜单

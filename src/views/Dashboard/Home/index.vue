@@ -1,5 +1,7 @@
 <template>
-  <div class="home">首页</div>
+  <div class="home">
+      <x-table></x-table>
+  </div>
 </template>
 
 <script>

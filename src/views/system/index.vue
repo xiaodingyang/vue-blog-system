@@ -33,7 +33,6 @@ export default {
 
 <style scoped lang="scss">
 .table-page {
-  margin: 15px;
   #content {
     box-sizing: border-box;
     padding: 15px;

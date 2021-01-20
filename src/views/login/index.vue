@@ -46,7 +46,7 @@
 				<el-button
 					size="mini"
 					type="main"
-					v-debounce="submitForm"
+					@click="submitForm"
 					:loading="loading"
 					>登录</el-button
 				>
@@ -99,29 +99,31 @@ export default {
 			this.loading = true
 			this.$refs.loginForm.validate((valid) => {
 				if (valid) {
-					this.$api.user.login(this.loginForm).then((res) => {
-						if (res) {
-							this.loading = false
-							this.$cookie.set('token', res.token)
-							let path = '/'
-							if (
-								location.search &&
-								location.search.includes('fromPath')
-							) {
-								path = stringQuery(
-									decodeURIComponent(location.search)
-								).fromPath
+					this.$api.user
+						.login(this.loginForm)
+						.then((res) => {
+							if (res) {
+								this.loading = false
+                                this.$cookie.set('token', res.token)
+                                this.$store.dispatch('getUserInfo') // 登录成功重新获取userinfo
+								let path = '/'
+								// 拿到上次离开时的路由
+								const prePath = localStorage.getItem('prePath')
+								if (prePath&&prePath!=='/login') {
+									this.$router.push(prePath)
+								}else{
+                                    this.$router.push('/')
+                                }
+							} else {
+								this.loading = false
+								this.getcaptcha()
+								this.loginForm.identifying = ''
 							}
-							this.$router.push(path)
-						}else{
-                            this.loading = false
-                            this.getcaptcha()
-                            this.loginForm.identifying=''
-                        }
-					})
-				}else{
-                    this.loading = false
-                }
+						})
+						.catch((err) => (this.loading = false))
+				} else {
+					this.loading = false
+				}
 			})
 		},
 		getcaptcha() {

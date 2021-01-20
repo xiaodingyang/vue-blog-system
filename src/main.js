@@ -11,6 +11,7 @@ import Directives from '@/directives'
 import formCreate from '@form-create/element-ui'
 import upperFirst from 'lodash/upperFirst' //应用模块
 import camelCase from 'lodash/camelCase' //转为驼峰命名
+import xdySystem from 'xdy-system' 
 
 
 // 自定义指令
@@ -21,9 +22,11 @@ vhCheck('browser-address-bar')
 Vue.use(ElementUI)
 
 Vue.use(myPlugins)
+console.log('ttt',xdySystem);
+Vue.use(xdySystem)
 
 // form-create
-Vue.use(formCreate)
+Vue.use(formCreate) // 全局挂载，vue组件中可以使用 this.$formCreate 获取
 
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ ⭐⭐⭐ ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 全局自动化注册组件 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
@@ -64,6 +67,6 @@ requireComponent.keys().forEach((fileName) => {
 
 new Vue({
 	router,
-	store,
+    store,
 	render: (h) => h(App),
 }).$mount('#app')

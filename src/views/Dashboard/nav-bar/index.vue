@@ -31,7 +31,6 @@ export default {
 		
 	},
 	created() {
-        this.$store.dispatch('setTheme','theme1')
 		this.getNavData()
 	},
 	watch: {
@@ -53,9 +52,10 @@ export default {
 		},
 		loopList(nav) {
 			return nav.map((item) => {
-				//   1 为菜单栏路由，0为普通路由
+				//   0为普通路由，1 为菜单栏路由
 				if (item.meta && item.meta.type) {
-					if (item.children) {
+                    const isSub = item.children&&item.children.some(item=>item.meta.type)
+					if (isSub) {
 						return (
 							<el-submenu index="1">
 								<template slot="title">
