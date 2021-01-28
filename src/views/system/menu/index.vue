@@ -1,31 +1,36 @@
 <template>
 	<div class="role-page">
-		<BaseTablePage
+		<x-table
 			ref="table"
-			:tableColumn="tableColumn"
-			:tableSearch="tableSearch"
+			:columns="columns"
+			:search="search"
 			:operation="operation"
 			:dataFunc="dataFunc"
-		></BaseTablePage>
-		<BaseEditPage
+		></x-table>
+		<x-edit
 			ref="edit"
-			:formColumn="formColumn"
-			@formChange="formChange"
-		></BaseEditPage>
+			:rule="rule"
+			:props="editProps"
+			:submitFunc="submitFunc"
+			@change="handleChange"
+			@beforeSubmit="beforeSubmit"
+			@afterSubmit="afterSubmit"
+		></x-edit>
 	</div>
 </template>
 <script>
-import BaseTablePage from '@/components/BaseTablePage/index'
 export default {
 	props: [],
 	data() {
 		return {
 			dataFunc: this.$api.system.getMenuList,
-			editTitle: '',
-			submitFunc: null,
+			submitFunc: this.$api.system.saveMenu,
+			editProps: {
+				diaTitle: '编辑用户',
+			},
 			parentList: [],
 			/* 表格渲染项 */
-			tableColumn: [
+			columns: [
 				{
 					key: 'label',
 					label: '菜单名称',
@@ -89,7 +94,7 @@ export default {
 				],
 			},
 			/* 搜索项 */
-			tableSearch: {
+			search: {
 				form: [
 					{
 						type: 'input',
@@ -121,7 +126,7 @@ export default {
 				button: [{ label: '新增菜单', func: this.handleAdd }],
 			},
 			/* 表单渲染项 */
-			formColumn: [
+			rule: [
 				{
 					type: 'radio',
 					title: '菜单类型',
@@ -154,7 +159,7 @@ export default {
 					props: {
 						placeholder: '请输入菜单名称',
 					},
-				},
+                },
 				{
 					type: 'input',
 					title: '排序',
@@ -251,36 +256,36 @@ export default {
 	computed: {},
 	methods: {
 		// form改变时执行
-		formChange($f) {
-			// 菜单类型改变
+		handleChange($f) {
+            // 菜单类型改变
 			if ($f.form.type === 0) {
 				$f.hidden(true, ['sort', 'icon'])
-			}
-			if ($f.form.type === 1) {
+			}else{
 				$f.hidden(false, ['sort', 'icon'])
 			}
 		},
 		// 编辑
 		handelEdit(row) {
-			this.$refs.edit.handleOpen({
-				title: '编辑审核人',
-				submitFunc: this.$api.system.saveMenu,
-				row,
-				refreshTable: this.$refs.table.getData,
-			})
+			this.$refs.edit.handleOpen(row)
+			this.$set(this.editProps, 'diaTitle', '编辑菜单')
 		},
 
 		handleAdd() {
-			this.$refs.edit.handleOpen({
-				title: '新增审核人',
-				submitFunc: this.$api.system.saveMenu,
-				refreshTable: this.$refs.table.getData,
-			})
+			this.$refs.edit.handleOpen()
+			this.$set(this.editProps, 'diaTitle', '新增菜单')
+		},
+
+		afterSubmit(data) {
+			// 提交以后，刷新表格
+			this.$refs.table.getData()
+		},
+		beforeSubmit(data) {
+			// 提交之前
 		},
 		// 获取所有菜单
 		getMenu() {
 			this.$api.system.getMenu().then((res) => {
-				this.formColumn = this.formColumn.map((item) => {
+				this.rule = this.rule.map((item) => {
 					if (item.field === 'parentId')
 						item = {
 							type: 'cascader',
@@ -307,7 +312,7 @@ export default {
 	created() {
 		this.getMenu()
 	},
-	components: { BaseTablePage },
+	components: {},
 }
 </script>
 <style scoped lang="less"></style>

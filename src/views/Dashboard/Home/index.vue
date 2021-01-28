@@ -1,26 +1,30 @@
 <template>
-  <div class="home">
-      <x-table></x-table>
-  </div>
+	<div class="home">
+		首页
+	</div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      data: [],
-    };
-  },
-  methods: {},
-  created(){
-      
-  }
-};
+	data() {
+		return {
+			data: [],
+		}
+	},
+	methods: {
+
+		handleClick(e) {
+			console.log('e', e) // content标签
+		},
+	},
+	created() {
+    },
+}
 </script>
 
 <style scoped lang="scss">
 .home {
-  @include font($s: 25px, $c: red);
-  @include vh($h: 50vh);
+	@include font($s: 25px, $c: red);
+	@include vh($h: 50vh);
 }
 </style>

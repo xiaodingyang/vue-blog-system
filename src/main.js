@@ -11,7 +11,8 @@ import Directives from '@/directives'
 import formCreate from '@form-create/element-ui'
 import upperFirst from 'lodash/upperFirst' //应用模块
 import camelCase from 'lodash/camelCase' //转为驼峰命名
-import xdySystem from 'xdy-system' 
+import xdy from 'xdy-example-vue' 
+import  'xdy-example-vue/lib/xdy.css' 
 
 
 // 自定义指令
@@ -22,8 +23,7 @@ vhCheck('browser-address-bar')
 Vue.use(ElementUI)
 
 Vue.use(myPlugins)
-console.log('ttt',xdySystem);
-Vue.use(xdySystem)
+Vue.use(xdy)
 
 // form-create
 Vue.use(formCreate) // 全局挂载，vue组件中可以使用 this.$formCreate 获取

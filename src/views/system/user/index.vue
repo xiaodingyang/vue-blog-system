@@ -1,36 +1,42 @@
 <template>
 	<div class="role-page">
-		<BaseTablePage
+		<x-table
 			ref="table"
-			:tableColumn="tableColumn"
-			:tableSearch="tableSearch"
+			:columns="columns"
+			:search="search"
 			:operation="operation"
 			:dataFunc="dataFunc"
-		></BaseTablePage>
-		<BaseEditPage
+			:props="props"
+		></x-table>
+		<x-edit
 			ref="edit"
-			:formColumn="formColumn"
-			@formChange="formChange"
+			:rule="rule"
 			:props="editProps"
-		></BaseEditPage>
+			:submitFunc="submitFunc"
+			@change="handleChange"
+			@beforeSubmit="beforeSubmit"
+			@afterSubmit="afterSubmit"
+		></x-edit>
 	</div>
 </template>
 <script>
-import BaseTablePage from '@/components/BaseTablePage/index'
 import { uploadFun } from '@/utils'
 export default {
 	props: [],
 	data() {
 		return {
+			props: {},
 			dataFunc: this.$api.system.getUserList,
+			submitFunc: this.$api.system.addUser,
 			editData: {},
 			form: {},
 			file: {},
 			editProps: {
 				labelWidth: '100px',
+				diaTitle: '编辑用户',
 			},
 			/* 表格渲染项 */
-			tableColumn: [
+			columns: [
 				{
 					key: 'headImg',
 					label: '头像',
@@ -71,6 +77,7 @@ export default {
 				{ key: 'phone', label: '电话' },
 				{ key: 'email', label: '邮箱' },
 				{ key: 'createdTime', label: '创建时间' },
+				{ key: 'updateTime', label: '更新时间' },
 			],
 			/* 操作项 */
 			operation: {
@@ -85,7 +92,7 @@ export default {
 				],
 			},
 			/* 搜索项 */
-			tableSearch: {
+			search: {
 				form: [
 					{
 						type: 'input',
@@ -116,7 +123,7 @@ export default {
 				button: [{ label: '新增用户', func: this.handleAdd }],
 			},
 			/* 表单渲染项 */
-			formColumn: [
+			rule: [
 				{
 					type: 'upload',
 					field: 'headImg',
@@ -248,13 +255,13 @@ export default {
 		onSuccess(res, file, fileList) {
 			file.url = this.file.url
 		},
-		formChange($f) {
+		handleChange($f) {
 			this.form = $f
 		},
 		validatePass(rule, value, callback) {
 			if (value === '') {
 				callback(new Error('请再次输入密码'))
-			} else if (value !== this.form.form.password1) {
+			} else if (value !== this.$refs.edit.form.form.password1) {
 				callback(new Error('两次输入密码不一致!'))
 			} else {
 				callback()
@@ -262,38 +269,28 @@ export default {
 		},
 		// 编辑
 		handelEdit(row) {
-			this.$refs.edit.handleOpen({
-				title: '编辑用户',
-				submitFunc: this.submitFunc,
-				row,
-				refreshTable: this.$refs.table.getData,
-			})
+			this.$refs.edit.handleOpen(row)
 			this.$nextTick(() => {
-				this.form.hidden(true, ['password1', 'password2'])
+				this.$refs.edit.form.hidden(true, ['password1', 'password2'])
 			})
 		},
-		// 刷新列表
-		refreshTable(params) {
-			return this.$refs.table.getData(params)
-		},
+		// 新增用户
 		handleAdd() {
-			this.$refs.edit.handleOpen({
-				title: '新增用户',
-				submitFunc: this.submitFunc,
-				refreshTable: this.$refs.table.getData,
-			})
+			this.$refs.edit.handleOpen()
 		},
-		// 提交的回调函数
-		submitFunc(callback) {
-			callback(this.$api.system.addUser, (data) => {
+		beforeSubmit(data) {
+			if (data.password1) {
 				data.password = data.password1
 				delete data.password1
 				delete data.password2
-			})
+			}
+		},
+		afterSubmit(data) {
+			// 提交以后，刷新表格
+			this.$refs.table.getData()
 		},
 	},
 	created() {},
-	components: { BaseTablePage },
+	components: {},
 }
 </script>
-<style scoped lang="less"></style>
