@@ -8,12 +8,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import vhCheck from 'vh-check'
 import Directives from '@/directives'
-import formCreate from '@form-create/element-ui'
+// import formCreate from '@form-create/element-ui'
 import upperFirst from 'lodash/upperFirst' //应用模块
 import camelCase from 'lodash/camelCase' //转为驼峰命名
 import xdy from 'xdy-example-vue' 
 import  'xdy-example-vue/lib/xdy.css' 
-
+import Vue2Editor  from "vue2-editor";
 
 // 自定义指令
 Vue.use(Directives)
@@ -24,9 +24,9 @@ Vue.use(ElementUI)
 
 Vue.use(myPlugins)
 Vue.use(xdy)
-
+Vue.use(Vue2Editor);
 // form-create
-Vue.use(formCreate) // 全局挂载，vue组件中可以使用 this.$formCreate 获取
+// Vue.use(formCreate) // 全局挂载，vue组件中可以使用 this.$formCreate 获取
 
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ ⭐⭐⭐ ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //
 // ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 全局自动化注册组件 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ //

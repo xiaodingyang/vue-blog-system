@@ -2,7 +2,7 @@
 @import './mixin.scss';
 @import './transition.scss';
 // @import './element-ui.scss';
-@import './btn.scss';
+@import './element.scss';
 @import './nprogress.scss';
 @import './young.scss';
 
@@ -14,8 +14,6 @@ body {
 	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
 		Microsoft YaHei, Arial, sans-serif;
 }
-
-
 
 html {
 	height: 100%;
@@ -90,8 +88,8 @@ div:focus {
 	margin-left: 15px;
 }
 
-.ma{
-    margin:auto;
+.ma {
+	margin: auto;
 }
 
 .pointer {
@@ -107,4 +105,10 @@ div:focus {
 		clear: both;
 		height: 0;
 	}
+}
+
+.over-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

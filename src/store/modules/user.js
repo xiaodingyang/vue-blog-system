@@ -16,7 +16,7 @@ const user = {
 		SET_MENU_LIST: (state, menu) => {
 			state.sourceRoutes = menu.sourceRoutes
 			state.addRoutes = menu.addRoutes
-			state.sidebarRouters = menu.sidebarRouters
+            state.sidebarRouters = menu.sidebarRouters
 		},
 	},
 
@@ -86,6 +86,6 @@ function setAddRoutes(data) {
 }
 // 设置菜单栏路由
 function setSidebarRouters(data){
-    return [...navMap,...setComponent(data)]
+    return [...navMap,...setComponent(data)].filter(item=>item.meta&&item.meta.type || item.path==='/')
 }
 export default user

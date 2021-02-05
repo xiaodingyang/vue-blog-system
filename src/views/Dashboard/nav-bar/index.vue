@@ -1,10 +1,8 @@
 <script>
-import navMap from '@/router/navMap'
 export default {
 	data() {
 		return {
 			isCollapse: false,
-			navList: [],
 		}
 	},
 	render(h) {
@@ -28,21 +26,17 @@ export default {
 		)
 	},
 	computed: {
-		
+		navList(){
+            return this.$store.getters.sidebarRouters
+        }
 	},
 	created() {
-		this.getNavData()
 	},
 	watch: {
 		
 	},
 	methods: {
-		getNavData() {
-			const navList = this.$store.getters.sidebarRouters
-			if (navList) {
-				this.navList = navList
-			}
-		},
+		
 		menuIsOpen() {
 			const isCollapse = this.isCollapse
 			this.isCollapse = !isCollapse
@@ -57,7 +51,7 @@ export default {
                     const isSub = item.children&&item.children.some(item=>item.meta.type)
 					if (isSub) {
 						return (
-							<el-submenu index="1">
+							<el-submenu index={item.path}>
 								<template slot="title">
 									<i class={item.meta.icon}></i>
 									<span slot="title">{item.meta.title}</span>

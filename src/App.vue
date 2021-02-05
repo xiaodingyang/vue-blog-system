@@ -89,13 +89,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 #app {
 	height: 100vh;
 	width: 100vw;
 	.el-scrollbar__wrap {
 		overflow-x: hidden; /*去除x轴滚动条*/
-		white-space: nowrap; /*字体不换行，出现横向滚动条*/
+		// white-space: nowrap; /*字体不换行，出现横向滚动条*/
 	}
 }
 </style>

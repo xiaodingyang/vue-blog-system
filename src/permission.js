@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
 								path: '*',
 								name: '404',
 								component: () => import('@/components/error/404.vue'),
-							},
+							}
 						])
 						/*
                         其实next({ ...to })的执行很简单，它会判断： 如果参数to不能找到对应的路由的话，就再执行一次beforeEach((to, from, next)直到其中的next({ ...to})能找到对应的路由为止

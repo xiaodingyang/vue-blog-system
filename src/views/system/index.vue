@@ -1,11 +1,5 @@
 <template>
-  <div class="table-page">
-    <div id="content" ref="content">
-      <transition name="fade-transform" mode="out-in">
-        <router-view></router-view>
-      </transition>
-    </div>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -32,14 +26,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.table-page {
-  #content {
-    box-sizing: border-box;
-    padding: 15px;
-    margin-top: 0;
-    box-shadow: 0 0 3px 0 #000;
-    @include bg($bg: #fff);
-    border-radius: 3px;
-  }
-}
+
 </style>

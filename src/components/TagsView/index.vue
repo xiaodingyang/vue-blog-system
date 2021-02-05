@@ -174,7 +174,7 @@ export default {
 				const { fullPath } = view
 				this.$nextTick(() => {
 					this.$router.replace({
-						path: '/redirect' + fullPath,
+						path: fullPath,
 					})
 				})
 			})

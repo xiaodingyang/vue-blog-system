@@ -14,8 +14,7 @@ const axiosFunc = (baseURL) => {
 	instance.interceptors.request.use(
 		(config) => {
             const token = Cookie.get('token')
-            
-			token && (config.headers.Authorization = token)
+            token && (config.headers.Authorization = token)
 			return config
 		},
 		(err) => {

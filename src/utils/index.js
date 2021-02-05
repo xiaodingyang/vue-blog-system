@@ -1,4 +1,5 @@
 import COS from 'cos-js-sdk-v5'
+import { Message } from 'element-ui';
 
 //* *************************************query转化为search**************************************************//
 
@@ -190,24 +191,22 @@ export const setTreeData = (data) => {
 	return data.filter((item) => !item.parentId)
 }
 
-/****************************ocs 云存储上传****************************/ 
-
+/****************************ocs 云存储上传****************************/
+/*这部分是获取签名*/
+var cos = new COS({
+	SecretId: 'AKIDtb9RUJvNZooY7REQAQilZ7PVSBfBuTIx',
+	SecretKey: 'bw2sfDahYDcrs0yhAON7e2UkkV0MTKwZ',
+})
 export const uploadFun = (file) => {
 	return new Promise((resolve, e) => {
-		/*这部分是获取签名*/
-		var cos = new COS({
-			SecretId: 'AKIDtb9RUJvNZooY7REQAQilZ7PVSBfBuTIx',
-			SecretKey: 'bw2sfDahYDcrs0yhAON7e2UkkV0MTKwZ',
-		})
 		/*这部分是腾讯提供的上传的接口*/
 		cos.putObject(
 			{
 				Bucket: 'xiaodingyang-1300707163', //存储桶用户识别   （必须有）
 				Region: 'ap-chengdu', //地区识别（必须有）
-				Key: file.name, //文件名字（这里需要注意的是，如果名字是一样的，那么后面的会覆盖前面的，所以这个名字不可以重复）（必须有）
+				Key: '/myBlog/' + file.name, //文件名字（这里需要注意的是，如果名字是一样的，那么后面的会覆盖前面的，所以这个名字不可以重复）（必须有）
 				StorageClass: 'STANDARD', // 可以不写
 				Body: file, // 上传文件对象（可以不写）
-				// FilePath: "/myBlog",
 				onProgress: function(progressData) {},
 			},
 			(err, data) => {
@@ -216,8 +215,8 @@ export const uploadFun = (file) => {
 						name: file.name,
 						uid: file.uid,
 						url: 'http://' + data.Location,
-                    }
-                    resolve(list)
+					}
+					resolve(list)
 				}
 				if (err) e(err)
 			}
@@ -225,3 +224,36 @@ export const uploadFun = (file) => {
 	})
 }
 
+export const downLoad = (file) => {
+	cos.getObject(
+		{
+			Bucket: 'xiaodingyang-1300707163', //存储桶用户识别   （必须有）
+			Region: 'ap-chengdu', //地区识别（必须有）
+			Key: '/myBlog/' + file.name, //文件名字（这里需要注意的是，如果名字是一样的，那么后面的会覆盖前面的，所以这个名字不可以重复）（必须有）
+		},
+		function(err, data) {
+            // console.log(err || data.Body)
+            // let localHref = window.URL.createObjectURL(
+            //     new Blob([data.Body])
+            // );
+            // window.open(localHref)
+		}
+	)
+}
+export const deleteFunc = (file) => {
+	cos.deleteObject(
+		{
+			Bucket: 'xiaodingyang-1300707163', //存储桶用户识别   （必须有）
+			Region: 'ap-chengdu', //地区识别（必须有）
+			Key: '/myBlog/' + file.name, //文件名字（这里需要注意的是，如果名字是一样的，那么后面的会覆盖前面的，所以这个名字不可以重复）（必须有）
+		},
+		function(err, data) {
+            console.log(err || data)
+            if(data&&data.statusCode<300){
+                Message.success('删除成功！')
+            }else{
+                Message.error(err)
+            }
+		}
+	)
+}

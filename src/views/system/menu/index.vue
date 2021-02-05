@@ -2,39 +2,40 @@
 	<div class="role-page">
 		<x-table
 			ref="table"
+			stripe
 			:columns="columns"
 			:search="search"
 			:operation="operation"
 			:dataFunc="dataFunc"
+			row-key="id"
+			:header-cell-style="{
+				background: '#e5e5e5',
+				color: '#666',
+			}"
+			:tree-props="{ hasChildren: 'hasChildren', children: 'children' }"
 		></x-table>
-		<x-edit
-			ref="edit"
-			:rule="rule"
-			:props="editProps"
+		<Edit
 			:submitFunc="submitFunc"
-			@change="handleChange"
-			@beforeSubmit="beforeSubmit"
-			@afterSubmit="afterSubmit"
-		></x-edit>
+			ref="edit"
+			:refreshTable="refreshTable"
+		></Edit>
 	</div>
 </template>
 <script>
+import Edit from './edit'
 export default {
+	components: { Edit },
 	props: [],
 	data() {
 		return {
 			dataFunc: this.$api.system.getMenuList,
 			submitFunc: this.$api.system.saveMenu,
-			editProps: {
-				diaTitle: '编辑用户',
-			},
-			parentList: [],
 			/* 表格渲染项 */
 			columns: [
 				{
 					key: 'label',
 					label: '菜单名称',
-					formatter(h, row) {
+					formatter: (row) => {
 						return (
 							<span>
 								<span class={row.icon}></span>{' '}
@@ -50,7 +51,7 @@ export default {
 				{
 					key: 'type',
 					label: '类型',
-					formatter(h, row) {
+					formatter: (row) => {
 						let str = '',
 							type = 'main'
 						if (row.type === 1) str = '菜单目录'
@@ -68,7 +69,7 @@ export default {
 				{
 					key: 'auth',
 					label: '权限',
-					formatter(h, row) {
+					formatter: (row) => {
 						let str = ''
 						if (row.auth === 0) str = '公共'
 						if (row.auth === 1) str = '普通用户'
@@ -125,194 +126,26 @@ export default {
 				],
 				button: [{ label: '新增菜单', func: this.handleAdd }],
 			},
-			/* 表单渲染项 */
-			rule: [
-				{
-					type: 'radio',
-					title: '菜单类型',
-					field: 'type',
-					options: [
-						{ label: '按钮路由', value: 0 },
-						{ label: '菜单目录', value: 1 },
-					],
-					validate: [
-						{
-							type: 'string',
-							required: true,
-							message: '请选择菜单类型',
-						},
-					],
-				},
-				{
-					type: 'cascader',
-					field: 'parentId',
-					title: '上级菜单',
-					props: {
-						placeholder: '请输入上级菜单',
-					},
-				},
-
-				{
-					type: 'input',
-					title: '菜单名称',
-					field: 'label',
-					props: {
-						placeholder: '请输入菜单名称',
-					},
-                },
-				{
-					type: 'input',
-					title: '排序',
-					field: 'sort',
-					validate: [
-						{
-							type: 'number',
-							required: true,
-							message: '请输入排序',
-						},
-					],
-					props: {
-						placeholder: '请输入排序',
-					},
-				},
-				{
-					type: 'input',
-					title: '路由名称',
-					field: 'name',
-					validate: [
-						{
-							type: 'string',
-							required: true,
-							message: '请输入路由名称',
-						},
-					],
-					props: {
-						placeholder: '请输入路由名称',
-					},
-				},
-				{
-					type: 'input',
-					title: '路由地址',
-					field: 'path',
-					validate: [
-						{
-							type: 'string',
-							required: true,
-							message: '请输入路由地址',
-						},
-					],
-					props: {
-						placeholder: '请输入路由地址',
-					},
-				},
-				{
-					type: 'input',
-					title: '组件路径',
-					field: 'component',
-					validate: [
-						{
-							type: 'string',
-							required: true,
-							message: '请输入组件地址',
-						},
-					],
-					props: {
-						placeholder: '请输入组件地址',
-					},
-				},
-				{
-					type: 'select',
-					field: 'auth',
-					title: '访问权限',
-					value: 0,
-					options: [
-						{ label: '公共', value: 0 },
-						{ label: '普通用户', value: 1 },
-						{ label: '管理员', value: 2 },
-					],
-					validate: [
-						{
-							type: 'number',
-							required: true,
-							message: '请选择访问权限',
-						},
-					],
-					props: {
-						placeholder: '请选择访问权限',
-					},
-				},
-				{
-					type: 'input',
-					title: '图标',
-					field: 'icon',
-
-					props: {
-						placeholder: '请输入图标',
-					},
-				},
-			],
+			
 		}
 	},
 	computed: {},
 	methods: {
-		// form改变时执行
-		handleChange($f) {
-            // 菜单类型改变
-			if ($f.form.type === 0) {
-				$f.hidden(true, ['sort', 'icon'])
-			}else{
-				$f.hidden(false, ['sort', 'icon'])
-			}
+		// 刷新列表函数
+		refreshTable(params) {
+			this.$refs.table.getData(params)
 		},
+
 		// 编辑
 		handelEdit(row) {
 			this.$refs.edit.handleOpen(row)
-			this.$set(this.editProps, 'diaTitle', '编辑菜单')
 		},
 
 		handleAdd() {
 			this.$refs.edit.handleOpen()
-			this.$set(this.editProps, 'diaTitle', '新增菜单')
 		},
-
-		afterSubmit(data) {
-			// 提交以后，刷新表格
-			this.$refs.table.getData()
-		},
-		beforeSubmit(data) {
-			// 提交之前
-		},
-		// 获取所有菜单
-		getMenu() {
-			this.$api.system.getMenu().then((res) => {
-				this.rule = this.rule.map((item) => {
-					if (item.field === 'parentId')
-						item = {
-							type: 'cascader',
-							field: 'parentId',
-							title: '上级菜单',
-							props: {
-								options: res.list,
-								placeholder: '请选择上级菜单',
-								clearable: true,
-								filterable: true,
-								emitPath: true,
-								props: {
-									value: 'id',
-									emitPath: false,
-									checkStrictly: true,
-								},
-							},
-						}
-					return item
-				})
-			})
-		},
+		created() {},
 	},
-	created() {
-		this.getMenu()
-	},
-	components: {},
 }
 </script>
 <style scoped lang="less"></style>

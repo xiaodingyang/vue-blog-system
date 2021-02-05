@@ -1,7 +1,8 @@
 import debounce from "./debounce";
+import changeHtml from "./html";
 // 自定义指令
 const directives = {
-    debounce
+    debounce,changeHtml
   }
   
   export default {

@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './navMap'
-import { Message } from 'element-ui'
-import api from '@/request/api/system'
 Vue.use(VueRouter)
 
 export const createRouter = (routes) => new VueRouter({

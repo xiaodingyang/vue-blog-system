@@ -9,7 +9,7 @@
 					<div class="head-s">
 						<img
 							v-if="userInfo.headImg"
-							:src="userInfo.headImg"
+							:src="userInfo.headImg[0].url"
 							alt=""
 							width="150"
 						/>
@@ -62,22 +62,10 @@
 				<div class="content">
 					<el-tabs v-model="activeName" @tab-click="handleClick">
 						<el-tab-pane label="基本资料" name="first">
-							<form-create
-								:option="option"
-								v-model="form1"
-								:rule="formColumn1"
-								@on-submit="handleSubmit1"
-								@change="handleChange1"
-							></form-create>
+							<Base :data="userInfo"/>
 						</el-tab-pane>
 						<el-tab-pane label="修改密码" name="second">
-							<form-create
-								:option="option"
-								v-model="form2"
-								:rule="formColumn2"
-								@on-submit="handleSubmit2"
-								@change="handleChange2"
-							></form-create>
+							<Pwd :data="userInfo"/>
 						</el-tab-pane>
 					</el-tabs>
 				</div>
@@ -87,14 +75,15 @@
 </template>
 
 <script>
-import { uploadFun } from '@/utils'
-import { removeToken } from '@/utils/auth'
+
+import Base from './base'
+import Pwd from './pwd'
 
 export default {
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐props⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	props: [],
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐组件注册⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
-	components: {},
+	components: { Base,Pwd },
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐data数据⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	data() {
 		return {
@@ -103,78 +92,14 @@ export default {
 			file: '',
 			form1: {},
 			form2: {},
-			option: {
-				form: {
-					//行内表单模式
-					inline: false,
-					//表单域标签的位置，如果值为 left 或者 right 时，则需要设置 label-width
-					labelPosition: 'right',
-					//表单域标签的宽度，例如 '50px'。作为 Form 直接子元素的 form-item 会继承该值。支持 auto。
-					labelWidth: '90px',
-					//用于控制该表单内组件的尺寸 medium / small / mini
-					size: 'medium',
-				},
-				submitBtn: {
-					// icon: '',
-					type: 'main',
-				},
-			},
-			formColumn1: [
-				{
-					type: 'upload',
-					field: 'headImg',
-					title: '头像',
-					value: [],
-					props: {
-						limit: 1,
-						uploadType: 'image',
-						action: process.env.VUE_APP_BASE_API + '/blog/upload',
-						beforeUpload: this.beforeUpload,
-						onSuccess: this.onSuccess,
-					},
-				},
-				{
-					type: 'input',
-					field: 'realname',
-					title: '昵称',
-					props: {
-						placeholder: '请输入昵称',
-						clearable: true,
-					},
-					validate: [
-						{
-							required: true,
-							message: '请输入昵称',
-							trigger: 'blur',
-						},
-					],
-				},
-				{
-					type: 'input',
-					field: 'phone',
-					title: '电话',
-					props: {
-						placeholder: '请输入电话',
-						clearable: true,
-					},
-				},
-				{
-					type: 'input',
-					field: 'email',
-					title: '邮箱',
-					props: {
-						placeholder: '请输入邮箱',
-						clearable: true,
-					},
-				},
-			],
+			
 			formColumn2: [
 				{
 					type: 'input',
 					field: 'password1',
 					title: '新密码',
 					props: {
-                        type:'password',
+						type: 'password',
 						placeholder: '请输入密码',
 						clearable: true,
 					},
@@ -191,7 +116,7 @@ export default {
 					field: 'password2',
 					title: '确认密码',
 					props: {
-                        type:'password',
+						type: 'password',
 						placeholder: '请再次输入密码',
 						clearable: true,
 					},
@@ -201,7 +126,7 @@ export default {
 							trigger: 'blur',
 							required: true,
 						},
-					]
+					],
 				},
 			],
 		}
@@ -217,53 +142,13 @@ export default {
 				callback()
 			}
 		},
-		async beforeUpload(file) {
-			await uploadFun(file).then((res) => {
-				this.file = res
-				//    this.form.setValue({headImg:[res]})
-			})
-		},
-		onSuccess(res, file, fileList) {
-			file.url = this.file.url
-		},
+		
 		handleClick() {},
-		handleChange1() {},
-		handleChange2() {},
-		handleSubmit1(data) {
-			this.submit(data, this.form1)
-		},
-		handleSubmit2(data) {
-			this.submit(data, this.form2)
-		},
-		submit(data, $f) {
-            $f.submitBtnProps({ loading: true })
-            data.id = this.userInfo.id
-            if(data.password1){
-                data.password = data.password1
-                delete data.password1
-                delete data.password2
-            }
-			this.$api.system
-				.addUser(data)
-				.then((res) => {
-					if (res.status) {
-						this.$message({
-							type: 'warning',
-							message: '操作成功，请重新登录！',
-						})
-						setTimeout(() => {
-							removeToken()
-							this.$router.push('/login')
-						}, 1000)
-					}
-					$f.submitBtnProps({ loading: false })
-				})
-				.catch((err) => $f.submitBtnProps({ loading: false }))
-		},
+		
+		
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐mounted方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	mounted() {
-		this.form1.setValue(this.userInfo)
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐created方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	created() {},

@@ -20,16 +20,27 @@
 		<div class="right">
 			<el-dropdown v-if="userInfo">
 				<span class="el-dropdown-link">
-					<img :src="userInfo.headImg" alt="" width="30" />
+					<img
+						v-if="userInfo.headImg"
+						:src="userInfo.headImg[0].url"
+						alt=""
+						width="30"
+					/>
 					<span
 						>{{ userInfo.realname
 						}}<i class="el-icon-arrow-down el-icon--right"></i
 					></span>
 				</span>
 				<el-dropdown-menu slot="dropdown">
-					<el-dropdown-item><router-link to="/profile">个人中心</router-link></el-dropdown-item>
-					<el-dropdown-item 
-						><span @click="setLayout">布局设置</span></el-dropdown-item
+					<el-dropdown-item
+						><router-link to="/profile"
+							>个人中心</router-link
+						></el-dropdown-item
+					>
+					<el-dropdown-item
+						><span @click="setLayout"
+							>布局设置</span
+						></el-dropdown-item
 					>
 					<el-dropdown-item
 						><span @click="loginout"
@@ -46,7 +57,7 @@
 			title="布局设置"
 			:visible.sync="dialogVisible"
 			width="30%"
-            :show-close="false"
+			:show-close="false"
 		>
 			<RightBar></RightBar>
 		</el-dialog>
@@ -70,7 +81,7 @@ export default {
 	},
 	data() {
 		return {
-            dialogVisible:false
+			dialogVisible: false,
 		}
 	},
 	methods: {
@@ -79,16 +90,15 @@ export default {
 			this.$router.push('/login')
 		},
 		setLayout() {
-            this.dialogVisible=true
-        },
+			this.dialogVisible = true
+		},
 	},
-	components: { Breadcrumb,RightBar },
-	created() {
-	},
+	components: { Breadcrumb, RightBar },
+	created() {},
 	computed: {
-		userInfo(){
-            return this.$store.getters.userInfo
-        }
+		userInfo() {
+			return this.$store.getters.userInfo
+		},
 	},
 }
 </script>
@@ -98,7 +108,7 @@ export default {
 	display: flex;
 	padding: 10px 14px;
 	background: $menuBgColor;
-    justify-content: space-between;
+	justify-content: space-between;
 	.left {
 		display: flex;
 		i {
@@ -138,9 +148,9 @@ export default {
 		}
 	}
 }
-/deep/.el-dialog{
-    position: absolute;
-    right:0!important;
-    margin:0!important;
+/deep/.el-dialog {
+	position: absolute;
+	right: 0 !important;
+	margin: 0 !important;
 }
 </style>
