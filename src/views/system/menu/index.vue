@@ -5,6 +5,7 @@
 			stripe
 			:columns="columns"
 			:search="search"
+            :isPagination="false"
 			:operation="operation"
 			:dataFunc="dataFunc"
 			row-key="id"
@@ -13,7 +14,9 @@
 				color: '#666',
 			}"
 			:tree-props="{ hasChildren: 'hasChildren', children: 'children' }"
-		></x-table>
+		>
+       
+        </x-table>
 		<Edit
 			:submitFunc="submitFunc"
 			ref="edit"
@@ -30,6 +33,7 @@ export default {
 		return {
 			dataFunc: this.$api.system.getMenuList,
 			submitFunc: this.$api.system.saveMenu,
+            searchForm:{},
 			/* 表格渲染项 */
 			columns: [
 				{
@@ -144,7 +148,7 @@ export default {
 		handleAdd() {
 			this.$refs.edit.handleOpen()
 		},
-		created() {},
+		
 	},
 }
 </script>

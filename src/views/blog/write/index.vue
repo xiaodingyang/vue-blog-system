@@ -4,8 +4,8 @@
 			ref="table"
 			stripe
 			:columns="columns"
-			:button="button"
 			:operation="operation"
+			:button="button"
 			:dataFunc="dataFunc"
 			:props="tableProps"
 			:header-cell-style="{
@@ -22,15 +22,23 @@
 				>
 					<el-form-item>
 						<el-input
-							v-model="searchForm.username"
-							placeholder="用户名"
+							v-model="searchForm.title"
+							placeholder="标题"
 						></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-input
-							v-model="searchForm.realname"
-							placeholder="昵称"
-						></el-input>
+						<el-select
+							v-model="searchForm.type"
+							filterable
+							placeholder="请选择"
+						>
+							<el-option
+								:label="item.name"
+								:value="item.code"
+								v-for="(item, idx) in typeOptions"
+								:key="idx"
+							></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item>
 						<el-button
@@ -52,66 +60,60 @@
 			:submitFunc="submitFunc"
 			ref="edit"
 			:refreshTable="refreshTable"
+			:typeOptions="typeOptions"
 		></Edit>
 	</div>
 </template>
 <script>
 import Edit from './edit'
 export default {
-	components: { Edit },
 	props: [],
 	data() {
 		return {
-			tableProps: {},
-			dataFunc: this.$api.system.getUserList,
-			submitFunc: this.$api.system.addUser,
-			form: {},
+			dataFunc: this.$api.blog.getBlog,
+			submitFunc: this.$api.blog.saveBlog,
 			searchForm: {},
-			file: {},
-
+			tableProps: {},
+			editProps: {
+				diaTitle: '编辑用户',
+			},
+			parentList: [],
+			typeOptions: [],
 			/* 表格渲染项 */
 			columns: [
 				{
-					key: 'headImg',
-					label: '头像',
+					key: 'src',
+					label: '图片',
+					width: '100px',
 					formatter: (row) => {
-						if (row.headImg && row.headImg[0]) {
+						if (row.src && row.src[0] && row.src[0].url) {
+							const url = row.src[0].url
 							return (
 								<el-image
-									style="width: 30px;"
-									src={row.headImg[0].url}
-									preview-src-list={[row.headImg[0].url]}
+									style="width: 40px;"
+									src={url}
+									preview-src-list={[url]}
 								></el-image>
 							)
 						}
 					},
 				},
-				{ key: 'username', label: '用户名' },
-				{ key: 'realname', label: '昵称' },
+				{ key: 'title', label: '标题' },
 				{
-					key: 'auth',
-					label: '权限',
+					key: 'type',
+					label: '类型',
 					formatter: (row) => {
-						let str = '',
-							color = 'success'
-						if (row.auth === 1) {
-							str = '普通用户'
-						}
-						if (row.auth === 2) {
-							str = '管理员'
-							color = 'danger'
-						}
-						return (
-							<el-tag size="mini" type={color} effect="dark">
-								{str}
-							</el-tag>
-						)
+						let str = ''
+						this.typeOptions.forEach((item) => {
+							if (item.code === row.type) str = item.name
+						})
+						return str
 					},
 				},
-				{ key: 'phone', label: '电话' },
-				{ key: 'email', label: '邮箱' },
+				{ key: 'description', label: '描述' },
 				{ key: 'createdTime', label: '创建时间' },
 				{ key: 'updateTime', label: '更新时间' },
+				{ key: 'author', label: '创建者' },
 			],
 			/* 操作项 */
 			operation: {
@@ -121,12 +123,11 @@ export default {
 					{
 						label: '删除',
 						type: 'danger',
-						func: this.$api.system.delUser,
+						func: this.$api.blog.deleteBlog,
 					},
 				],
 			},
-			/* 功能按钮 */
-			button: [{ label: '新增用户', func: this.handleAdd }],
+			button: [{ label: '新增博客', func: this.handleAdd }],
 		}
 	},
 	computed: {},
@@ -137,20 +138,6 @@ export default {
 		reset() {
 			this.searchForm = {}
 		},
-		// 刷新列表函数
-		refreshTable(params) {
-			this.$refs.table.getData(params)
-		},
-
-		validatePass(rule, value, callback) {
-			if (value === '') {
-				callback(new Error('请再次输入密码'))
-			} else if (value !== this.$refs.edit.form.form.password1) {
-				callback(new Error('两次输入密码不一致!'))
-			} else {
-				callback()
-			}
-		},
 		// 编辑
 		handelEdit(row) {
 			this.$refs.edit.handleOpen(row)
@@ -159,7 +146,17 @@ export default {
 		handleAdd() {
 			this.$refs.edit.handleOpen()
 		},
+		// 刷新列表函数
+		refreshTable(params) {
+			this.$refs.table.getData(params)
+		},
 	},
-	created() {},
+	created() {
+		this.$api.blog.getClass().then((res) => {
+			if (res && res.list) this.typeOptions = res.list
+		})
+	},
+	components: { Edit },
 }
 </script>
+<style scoped lang="less"></style>

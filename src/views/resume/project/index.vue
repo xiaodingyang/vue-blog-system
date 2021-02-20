@@ -46,7 +46,7 @@
 												:key="idx"
 											class="text item"
 										>
-											<el-col :span="8">
+											<el-col :span="4">
 													<el-form-item
 														label="项目名称"
 													>
@@ -57,18 +57,7 @@
 														></p>
 													</el-form-item>
 												</el-col>
-												<el-col :span="8">
-													<el-form-item
-														label="项目技能"
-													>
-														<p
-															v-html="
-																_item.skills
-															"
-														></p>
-													</el-form-item>
-												</el-col>
-												<el-col :span="8">
+                                                <el-col :span="10">
 													<el-form-item
 														label="项目描述"
 													>
@@ -79,6 +68,18 @@
 														></p>
 													</el-form-item>
 												</el-col>
+												<el-col :span="10">
+													<el-form-item
+														label="项目技能"
+													>
+														<p
+															v-html="
+																_item.skills
+															"
+														></p>
+													</el-form-item>
+												</el-col>
+												
 										</div>
 									</el-card>
 									

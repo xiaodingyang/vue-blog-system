@@ -3,18 +3,18 @@
 		<x-table
 			ref="table"
 			stripe
-            :isPagination="false"
+			:isPagination="false"
 			:columns="columns"
 			:operation="operation"
 			:dataFunc="dataFunc"
-			:search="search"
+			:button="button"
 			:props="tableProps"
 			:header-cell-style="{
 				background: '#e5e5e5',
 				color: '#666',
 			}"
 		>
-			<template v-slot:default="slotProps">
+			<template v-slot:expand="slotProps">
 				<el-form label-position="left" inline class="demo-table-expand">
 					<el-row>
 						<div v-for="(item, idx) in columns" :key="idx">
@@ -22,21 +22,25 @@
 								<div class="container">
 									<el-form-item
 										:label="item.label"
-                                        label-width="100px"
+										label-width="100px"
 									>
 										<el-row>
-                                            <el-col :span="12" v-for="(_item, idx) in slotProps
-												.props.skillList"
-											:key="idx">
-                                                <el-form-item
-											:label="_item.tag"
-											label-width="200px"
-											
-										>
-											<span>{{ _item.value }}</span>
-										</el-form-item>
-                                            </el-col>
-                                        </el-row>
+											<el-col
+												:span="12"
+												v-for="(_item, idx) in slotProps
+													.props.skillList"
+												:key="idx"
+											>
+												<el-form-item
+													:label="_item.tag"
+													label-width="200px"
+												>
+													<span>{{
+														_item.value
+													}}</span>
+												</el-form-item>
+											</el-col>
+										</el-row>
 									</el-form-item>
 								</div>
 							</el-col>
@@ -85,11 +89,15 @@
 				</el-form>
 			</template>
 		</x-table>
-		<Edit :submitFunc="submitFunc" ref="edit" :refreshTable="refreshTable"></Edit>
+		<Edit
+			:submitFunc="submitFunc"
+			ref="edit"
+			:refreshTable="refreshTable"
+		></Edit>
 	</div>
 </template>
 <script>
-import Edit from "./edit";
+import Edit from './edit'
 export default {
 	props: [],
 	data() {
@@ -133,44 +141,42 @@ export default {
 				width: '200',
 				button: [
 					{ label: '编辑', func: this.handelEdit },
-					{ label: '删除',type:'danger', func: this.$api.resume.baseDel },
+					{
+						label: '删除',
+						type: 'danger',
+						func: this.$api.resume.baseDel,
+					},
 				],
-            },
-            /* 搜索项 */
-			search: {
-				button: [{ label: '新增简历', func: this.handleAdd }],
 			},
-			
+			button: [{ label: '新增简历', func: this.handleAdd }]
 		}
 	},
-	computed: {
-        
-    },
+	computed: {},
 	methods: {
 		// 编辑
 		handelEdit(row) {
 			this.$refs.edit.handleOpen(row)
-        },
-        // 新增简历
-        handleAdd(){
-            this.$refs.edit.handleOpen()
-        },
-        // 刷新列表函数
-        refreshTable(params){
-            this.$refs.table.getData(params)
-        }
+		},
+		// 新增简历
+		handleAdd() {
+			this.$refs.edit.handleOpen()
+		},
+		// 刷新列表函数
+		refreshTable(params) {
+			this.$refs.table.getData(params)
+		},
 	},
 	created() {},
-	components: {Edit},
+	components: { Edit },
 }
 </script>
 <style lang="scss" scoped>
 .container {
 	width: 90%;
 }
-/deep/.el-form-item__label{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/deep/.el-form-item__label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 </style>
