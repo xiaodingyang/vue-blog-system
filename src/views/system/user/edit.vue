@@ -4,6 +4,7 @@
 		:visible.sync="dialogFormVisible"
 		:close-on-click-modal="false"
 		width="50%"
+        @closed="handleClose"
 	>
 		<el-form
 			:model="form"
@@ -174,6 +175,9 @@ export default {
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐method方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	methods: {
+        handleClose(){
+            this.form=this.originForm
+        },
 		validatePass(rule, value, callback) {
 			if (value === '') {
 				callback(new Error('请再次输入密码'))
@@ -255,9 +259,9 @@ export default {
 			this.dialogVisible = true
 		},
 	
-		handleRemove(file, fileList) {
+		handleRemove(file) {
             deleteFunc(file)
-			this.form.headImg = fileList
+			this.form.headImg = []
 		},
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐mounted方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//

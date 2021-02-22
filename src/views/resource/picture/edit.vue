@@ -3,7 +3,8 @@
 		:title="title"
 		:visible.sync="dialogFormVisible"
 		:close-on-click-modal="false"
-		width="80%"
+		width="50%"
+        @closed="handleClose"
 	>
 		<el-form
 			:model="form"
@@ -14,14 +15,17 @@
 			label-position="left"
 			class="form"
 		>
-			<el-form-item label="图片" prop="type">
+        <el-form-item label="图片标识" prop="imgKey">
+            <el-input v-model="form.imgKey" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="图片描述" prop="description"><el-input v-model="form.description" type="textarea" placeholder="请输入"></el-input></el-form-item>
+			<el-form-item label="上传图片" prop="imgList">
 				<el-upload
 					class="upload-demo"
 					:action="url"
 					:on-success="handleSuccess"
 					:before-upload="beforeUpload"
-					:file-list="form.src"
-					:limit="1"
+					:file-list="form.imgList"
 					list-type="picture-card"
 				>
 					<i slot="default" class="el-icon-plus"></i>
@@ -49,28 +53,6 @@
 				</div>
 				</el-upload>
 			</el-form-item>
-			<el-form-item label="标题" prop="title">
-				<el-input
-					v-model="form.title"
-					placeholder="请输入"
-				></el-input>
-			</el-form-item>
-			<el-form-item label="类型" prop="type">
-				<el-select v-model="form.type" filterable placeholder="请选择">
-					<el-option :label="item.name" :value="item.code" v-for="(item,idx) in typeOptions" :key="idx"></el-option>
-				</el-select>
-			</el-form-item>
-            <el-form-item label="描述" prop="description">
-				<el-input
-					v-model="form.description"
-					placeholder="请输入"
-                    type="textarea"
-				></el-input>
-			</el-form-item>
-            <el-form-item label="内容" prop="content">
-				<vue-editor id="editor" v-model="form.content" placeholder="请输入内容..." />
-			</el-form-item>
-
 			<el-button
 				type="main"
 				style="width:100%"
@@ -115,18 +97,19 @@ export default {
 			buttonLoading: false,
             url: process.env.VUE_APP_BASE_API + '/blog/upload',
 			form: {},
+            img:'',
 			originForm: {
-				
+				imgList:[]
 			},
 			rules: {
-				code: [
+				imgKey: [
 					{
 						required: true,
 						message: '请输入',
 						trigger: 'blur',
 					},
 				],
-				name: [
+				description: [
 					{
 						required: true,
 						message: '请输入',
@@ -139,14 +122,18 @@ export default {
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐method方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	methods: {
+        handleClose(){
+            this.form=this.originForm
+        },
         // 使用async 保证异步执行完以后才执行上传的下一步
 		async beforeUpload(file) {
 			await uploadFun(file).then((res) => {
-				this.form.src = [res]
+				this.img=res.url
 			})
 		},
 		handleSuccess(res, file, fileList) {
-			file.url = this.form.src[0].url
+			file.url = this.img
+            this.form.imgList=fileList
 			this.$message.success('上传成功！')
 		},
         handlePictureCardPreview(file) {
@@ -156,9 +143,9 @@ export default {
 	
 		handleRemove(file, fileList) {
             deleteFunc(file)
-			this.form.src = fileList
+			this.form.imgList = this.form.imgList.filter(item=>item.url!==file.url)
 		},
-		handleOpen(row) {
+		handleOpen(row) { 
 			this.dialogFormVisible = true
 			this.$nextTick(() => {
                 this.form = { ...this.originForm, ...sourceCopy(row) }
@@ -168,8 +155,6 @@ export default {
 			this.buttonLoading = true
 			this.$refs.form.validate((valid) => {
 				if (valid) {
-                    const author = this.$store.getters.userInfo.username
-                    this.form.author=author
 					console.log('form', this.form)
 					this.submitFunc(this.form).then((res) => {
 						if (res.status) {

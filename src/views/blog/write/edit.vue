@@ -4,6 +4,7 @@
 		:visible.sync="dialogFormVisible"
 		:close-on-click-modal="false"
 		width="80%"
+        @closed="handleClose"
 	>
 		<el-form
 			:model="form"
@@ -139,6 +140,9 @@ export default {
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐method方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	methods: {
+        handleClose(){
+            this.form=this.originForm
+        },
         // 使用async 保证异步执行完以后才执行上传的下一步
 		async beforeUpload(file) {
 			await uploadFun(file).then((res) => {

@@ -4,6 +4,7 @@
 		:visible.sync="dialogFormVisible"
 		:close-on-click-modal="false"
 		width="80%"
+        @closed="handleClose"
 	>
 		<el-form
 			:model="form"
@@ -187,6 +188,9 @@ export default {
 	},
 	//⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐method方法⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐//
 	methods: {
+         handleClose(){
+            this.form=this.originForm
+        },
 		handleOpen(row) {
 			this.dialogFormVisible = true
 			this.$nextTick(() => {

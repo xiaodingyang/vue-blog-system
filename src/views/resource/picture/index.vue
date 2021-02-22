@@ -5,57 +5,87 @@
 			stripe
 			:columns="columns"
 			:operation="operation"
-			:search="search"
+			:button="button"
 			:dataFunc="dataFunc"
 			:props="tableProps"
 			:header-cell-style="{
 				background: '#e5e5e5',
 				color: '#666',
 			}"
-		></x-table>
-        <Edit :submitFunc="submitFunc" ref="edit" :refreshTable="refreshTable" :typeOptions="typeOptions"></Edit>
+		>
+        <template v-slot:search>
+				<el-form
+					:model="searchForm"
+					ref="form"
+					size="mini"
+					:inline="true"
+				>
+					<el-form-item>
+						<el-input
+							v-model="searchForm.imgKey"
+							placeholder="图片标识"
+						></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button
+							icon="el-icon-search"
+							type="main"
+							@click="onSearch"
+							>搜索</el-button
+						>
+					</el-form-item>
+					<el-form-item>
+						<el-button @click="reset" icon="el-icon-setting"
+							>重置</el-button
+						>
+					</el-form-item>
+				</el-form>
+			</template>
+        </x-table>
+		<Edit
+			:submitFunc="submitFunc"
+			ref="edit"
+			:refreshTable="refreshTable"
+			:typeOptions="typeOptions"
+		></Edit>
 	</div>
 </template>
 <script>
-import Edit from "./edit";
+import Edit from './edit'
 export default {
 	props: [],
 	data() {
 		return {
-			dataFunc: this.$api.blog.getBlog,
-			submitFunc: this.$api.blog.saveBlog,
-			tableProps: {
-			},
+			dataFunc: this.$api.imgs.getImgs,
+			submitFunc: this.$api.imgs.saveImgs,
+			tableProps: {},
 			editProps: {
 				diaTitle: '编辑用户',
 			},
+            searchForm:{},
 			parentList: [],
 			typeOptions: [],
 			/* 表格渲染项 */
 			columns: [
-				{ key: 'src', label: '图片',width:'100px',formatter:(row)=>{
-                    
-                    if(row.src&&row.src[0]&&row.src[0].url){
-                        const url = row.src[0].url
-                        return <el-image
+				{ key: 'imgKey', label: '图片标识',width:'200px' },
+				{ key: 'description', label: '图片描述' },
+				{
+					key: 'imgList',
+					label: '图片列表',
+					formatter: (row) => {
+						const url = row.imgList
+						if (url&&url.length>0) {
+                            console.log('uuu',url);
+							return url.map(item=>{
+                                return <el-image
 									style="width: 40px;"
-									src={url}
-									preview-src-list={[url]}
+									src={item.url}
+									preview-src-list={url.map(item=>item.url)}
 								></el-image>
-                        }
-                } },
-				{ key: 'title', label: '标题' },
-				{ key: 'type', label: '类型',formatter:(row)=>{
-                    let str=''
-                    this.typeOptions.forEach(item=>{
-                        if(item.code===row.type) str = item.name
-                    })
-                    return str
-                } },
-				{ key: 'description', label: '描述' },
-				{ key: 'createdTime', label: '创建时间' },
-				{ key: 'updateTime', label: '更新时间' },
-				{ key: 'author', label: '创建者' },
+                            }) 
+						}
+					},
+				},
 			],
 			/* 操作项 */
 			operation: {
@@ -65,18 +95,21 @@ export default {
 					{
 						label: '删除',
 						type: 'danger',
-						func: this.$api.blog.deleteBlog,
+						func: this.$api.imgs.deleteImgs,
 					},
 				],
 			},
-			/* 搜索项 */
-			search: {
-				button: [{ label: '新增博客', func: this.handleAdd }],
-			},
+			button: [{ label: '新增图片', func: this.handleAdd }]
 		}
 	},
 	computed: {},
 	methods: {
+        onSearch() {
+			this.refreshTable(this.searchForm)
+		},
+		reset() {
+			this.searchForm = {}
+		},
 		// 编辑
 		handelEdit(row) {
 			this.$refs.edit.handleOpen(row)
@@ -91,11 +124,15 @@ export default {
 		},
 	},
 	created() {
-        this.$api.blog.getClass().then(res=>{
-            if(res&&res.list) this.typeOptions = res.list
-        })
-    },
-	components: {Edit},
+		this.$api.blog.getClass().then((res) => {
+			if (res && res.list) this.typeOptions = res.list
+		})
+	},
+	components: { Edit },
 }
 </script>
-<style scoped lang="less"></style>
+<style scoped lang="less">
+/deep/.el-image+{
+    margin-left: 10px;
+}
+</style>
