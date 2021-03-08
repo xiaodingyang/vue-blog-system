@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <div class='wrap'>
+      简历
+  </div>
 </template>
 
 <script>

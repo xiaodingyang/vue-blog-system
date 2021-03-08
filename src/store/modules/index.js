@@ -1,8 +1,6 @@
-import tagsView from './tagsView';
-import user from './user';
-import layout from './layout';
+
+import imgs from './imgs';
+import blogs from './blogs';
 export default {
-    tagsView,
-    user,
-    layout,
+    imgs,blogs
 };

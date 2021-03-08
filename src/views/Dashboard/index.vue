@@ -1,33 +1,31 @@
 <template>
 	<div class="index-page">
 		<BaseNavBar ref="menu" id="menu"></BaseNavBar>
-		<div id="main">
-			<div id="header">
-				<BaseHeader
-					:menuIsOpen="menuIsOpen"
-					:isOpen="isOpen"
-				></BaseHeader>
-				<TagsView></TagsView>
-			</div>
-			<div class="container">
+		<div
+			class="bg"
+		></div>
+		<vue-particles
+			color="#dedede"
+			:particlesNumber="40"
+			:linesDistance="120"
+			style="height:100%;width:100%;position:absolute;left:0;top:0;z-index:0;"
+		></vue-particles>
+		<div class="main">
+			<el-scrollbar style="height:100%;height:100%;">
 				<transition name="fade-transform" mode="out-in">
 					<router-view></router-view>
 				</transition>
-			</div>
-			<!-- <Footer /> -->
+			</el-scrollbar>
 		</div>
 	</div>
 </template>
 
 <script>
 import BaseNavBar from './nav-bar'
-import BaseHeader from './header'
 import Footer from './footer'
-import TagsView from '@/components/TagsView'
-
 export default {
 	props: [],
-	components: { BaseHeader, BaseNavBar, Footer, TagsView },
+	components: { BaseNavBar, Footer },
 	data() {
 		return {}
 	},
@@ -39,32 +37,43 @@ export default {
 			return this.$refs.menu.isOpen()
 		},
 	},
-	computed: {},
+	computed: {
+	
+	},
+	created() {},
 	mounted() {},
 }
 </script>
 
 <style scoped lang="scss">
 .index-page {
-	display: flex;
-	justify-content: space-between;
-	width: 100vw;
-	box-sizing: border-box;
+	.bg {
+		position: fixed;
+		left: -5px;
+		top: -5px;
+		z-index: -1;
+		width: 101vw;
+		height: 101vh;
+		-webkit-filter: blur(3px);
+		filter: (5px);
+        background:url("../../assets/imgs/bg/shizi.jpg") no-repeat center/cover
+	}
 	.container {
 		padding: 15px;
-        .base-page {
+		.base-page {
 			padding: 15px;
 			background: #fff;
 		}
 	}
-	#main {
-		box-sizing: border-box;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-		width: 100%;
-		box-sizing: border-box;
-		@include bg($bg: rgb(241, 244, 249));
+	.main {
+		width: 100vw;
+		height: 100vh;
+		/deep/.el-scrollbar__wrap {
+			overflow-x: hidden; /*去除x轴滚动条*/
+		}
+        /deep/.el-scrollbar__bar.is-horizontal{
+            display: none;
+        }
 	}
 }
 .fade-enter-active,

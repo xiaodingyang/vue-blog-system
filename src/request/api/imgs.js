@@ -5,12 +5,5 @@ export default {
 	getImgs(params) {
 		return baseAxios.get('/imgs/list', { params })
 	},
-	// 更新图片
-	saveImgs(params) {
-		return baseAxios.post('/imgs/save', params)
-	},
-	// 删除图片
-	deleteImgs(params) {
-		return baseAxios.post('/imgs/delete', params)
-	},
+	
 }

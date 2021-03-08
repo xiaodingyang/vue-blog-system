@@ -1,6 +1,5 @@
 import axios from 'axios' // 引入axios
 import store from '@/store/index' // 先导入vuex,因为我们要使用到里面的状态对象
-import Cookie from 'js-cookie'
 import { errorHandle, message, toLogin } from './utils'
 const axiosFunc = (baseURL) => {
 	axios.defaults.withCredentials = true // 解决跨域问题，以及后端redis跨域获取不到的问题，重要，重要
@@ -13,8 +12,6 @@ const axiosFunc = (baseURL) => {
 	// 请求拦截
 	instance.interceptors.request.use(
 		(config) => {
-            const token = Cookie.get('token')
-            token && (config.headers.Authorization = token)
 			return config
 		},
 		(err) => {

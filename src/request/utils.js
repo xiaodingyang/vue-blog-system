@@ -1,5 +1,4 @@
 import { Message } from 'element-ui';
-import Cookie from 'js-cookie';
 // 提示框
 export const message = (msg) => {
   Message({
@@ -33,7 +32,6 @@ export const errorHandle = (status, other) => {
     case 403:
       message('登录过期，请重新登录');
       // 清除token
-      Cookie.remove('token');
       store.commit('loginSuccess', null);
       setTimeout(() => {
         toLogin();
