@@ -61,6 +61,7 @@
 			ref="edit"
 			:refreshTable="refreshTable"
 			:typeOptions="typeOptions"
+			:searchForm="searchForm"
 		></Edit>
 	</div>
 </template>
