@@ -2,10 +2,26 @@
   <div class="wscn-http404-container">
     <div class="wscn-http404">
       <div class="pic-404">
-        <img class="pic-404__parent" src="@/assets/imgs/404_images/404.png" alt="404">
-        <img class="pic-404__child left" src="@/assets/imgs/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child mid" src="@/assets/imgs/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child right" src="@/assets/imgs/404_images/404_cloud.png" alt="404">
+        <img
+          class="pic-404__parent"
+          src="https://xiaodingyang-1300707163.cos.ap-chengdu.myqcloud.com/myBlog/404.png"
+          alt="404"
+        />
+        <img
+          class="pic-404__child left"
+          src="https://xiaodingyang-1300707163.cos.ap-chengdu.myqcloud.com/myBlog/404_cloud.png"
+          alt="404"
+        />
+        <img
+          class="pic-404__child mid"
+          src="https://xiaodingyang-1300707163.cos.ap-chengdu.myqcloud.com/myBlog/404_cloud.png"
+          alt="404"
+        />
+        <img
+          class="pic-404__child right"
+          src="https://xiaodingyang-1300707163.cos.ap-chengdu.myqcloud.com/myBlog/404_cloud.png"
+          alt="404"
+        />
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">
@@ -26,20 +42,19 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Page404',
+  name: "Page404",
   computed: {
     message() {
-      return '找不到网页！'
-    }
-  }
-}
+      return "找不到网页！";
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.wscn-http404-container{
-  transform: translate(-50%,-50%);
+.wscn-http404-container {
+  transform: translate(-50%, -50%);
   position: absolute;
   top: 40%;
   left: 50%;

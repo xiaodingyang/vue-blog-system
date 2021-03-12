@@ -88,7 +88,7 @@
 
 <script>
 import { sourceCopy } from "@/utils";
-import { uploadFun, downLoad, deleteFunc } from "@/utils";
+import { uploadFun } from "@/utils";
 import { MarkdownPro } from "vue-meditor";
 
 export default {
@@ -163,7 +163,6 @@ export default {
     },
 
     handleRemove(file, fileList) {
-      //   deleteFunc(file);
       this.form.src = fileList;
     },
     handleOpen(row) {
